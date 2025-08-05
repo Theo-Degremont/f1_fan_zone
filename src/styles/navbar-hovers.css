@@ -1,0 +1,99 @@
+/* Hovers spécialisés pour la NavBar F1 Fan Zone */
+
+/* Hover pour les liens de navigation */
+.nav-link-hover {
+  transition: all 0.3s ease;
+}
+
+.nav-link-hover:hover {
+  background-color: #C41700 !important; /* f1-red-600 */
+  color: white !important;
+}
+
+/* Hover pour le logo */
+.logo-hover {
+  transition: transform 0.3s ease;
+}
+
+.logo-hover:hover {
+  transform: scale(1.05) rotate(2deg);
+}
+
+/* Hover pour le bouton connexion avec trait en dessous */
+.connexion-hover {
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.connexion-hover::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background-color: #C41700; /* f1-red-600 */
+  transition: all 0.3s ease;
+  transform: translateX(-50%);
+}
+
+.connexion-hover:hover::before {
+  width: 100%;
+}
+
+
+/* Hover pour le bouton rejoindre */
+.rejoindre-hover {
+    background-color: #C41700 !important;
+    
+    transition: all 0.3s ease;
+}
+
+.rejoindre-hover:hover {
+   /* f1-red-800 */
+   box-shadow: 0 3px 10px rgb(255,112,93, 0.7);
+  transform: translateY(-2px);
+  
+}
+
+/* Hover pour le menu mobile */
+.mobile-nav-hover {
+  transition: all 0.3s ease;
+}
+
+.mobile-nav-hover:hover {
+  background-color: #DA3B23 !important;
+  color: white !important;
+}
+
+/* Hover pour le bouton hamburger */
+.hamburger-hover {
+  transition: all 0.2s ease;
+}
+
+.hamburger-hover:hover {
+  background-color: #555555 !important; /* f1-gray-500 */
+}
+
+/* Hover pour le bouton connexion mobile avec trait en dessous */
+.connexion-mobile-hover {
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.connexion-mobile-hover::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background-color: #DA3B23; /* f1-red-600 */
+  transition: all 0.3s ease;
+  transform: translateX(-50%);
+}
+
+.connexion-mobile-hover:hover::before {
+  width: 100%;
+}
+
