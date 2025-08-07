@@ -116,14 +116,14 @@ const teams: Team[] = [
     primaryColor: '#009dffff'
   },
   {
-    id: 'stack',
-    name: 'Stack F1 Team',
+    id: 'stake',
+    name: 'Stake F1 Team',
     founded: '2024',
     victories: 0,
     grandPrix: 160,
     championships: 0,
-    logoPath: '/images/team_logo/logo_stack.png',
-    carPath: '/images/team_cars/stack_f1_cars.png',
+    logoPath: '/images/team_logo/logo_stake.png',
+    carPath: '/images/team_cars/stake_f1_cars.png',
     primaryColor: '#0ed700ff'
   },
 
