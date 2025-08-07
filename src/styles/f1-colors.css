@@ -1,0 +1,78 @@
+/* CSS de fallback pour les couleurs F1 si Tailwind ne fonctionne pas */
+
+/* Couleurs F1 en CSS custom properties */
+:root {
+  /* Couleurs F1 Rouge */
+  --f1-red-900: #830F00;
+  --f1-red-800: #C41700;
+  --f1-red-600: #DA3B23;
+  --f1-red-400: #FF705D;
+  --f1-red-200: #FFB7AD;
+
+  /* Couleurs F1 Gris */
+  --f1-gray-900: #000000;
+  --f1-gray-800: #1C1C1C;
+  --f1-gray-700: #2B2B2B;
+  --f1-gray-600: #383838;
+  --f1-gray-500: #555555;
+  --f1-gray-100: #F2F2F2;
+  --f1-gray-50: #FFFFFF;
+}
+
+/* Classes CSS de fallback */
+.bg-f1-gray-700 {
+  background-color: var(--f1-gray-700) !important;
+}
+
+.bg-f1-gray-600 {
+  background-color: var(--f1-gray-600) !important;
+}
+
+.bg-f1-red-600 {
+  background-color: var(--f1-red-600) !important;
+}
+
+.bg-f1-red-800 {
+  background-color: var(--f1-red-800) !important;
+}
+
+.text-f1-gray-100 {
+  color: var(--f1-gray-100) !important;
+}
+
+.text-f1-red-600 {
+  color: var(--f1-red-600) !important;
+}
+
+.text-f1-red-400 {
+  color: var(--f1-red-400) !important;
+}
+
+.border-f1-gray-500 {
+  border-color: var(--f1-gray-500) !important;
+}
+
+.border-f1-gray-600 {
+  border-color: var(--f1-gray-600) !important;
+}
+
+/* Classes d'utilité pour les effets */
+.bg-f1-gray-600\/30 {
+  background-color: rgba(56, 56, 56, 0.3) !important;
+}
+
+.bg-f1-red-600\/20 {
+  background-color: rgba(218, 59, 35, 0.2) !important;
+}
+
+.text-f1-gray-100\/80 {
+  color: rgba(242, 242, 242, 0.8) !important;
+}
+
+.text-f1-gray-100\/70 {
+  color: rgba(242, 242, 242, 0.7) !important;
+}
+
+.text-f1-gray-100\/60 {
+  color: rgba(242, 242, 242, 0.6) !important;
+}

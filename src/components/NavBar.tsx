@@ -53,7 +53,7 @@ export default function NavBar() {
               <Link href="/connexion" className="connexion-hover text-f1-gray-100 px-2 py-2 rounded-md text-sm font-medium">
                 Connexion
               </Link>
-              <Link href="/rejoindre" className="rejoindre-hover bg-f1-red-600 text-white px-6 py-2 rounded-full text-sm font-medium">
+              <Link href="/rejoindre" className="rejoindre-hover bg-f1-red-600 text-white px-4 py-2 rounded-md text-sm font-medium">
                 Rejoindre
               </Link>
             </div>

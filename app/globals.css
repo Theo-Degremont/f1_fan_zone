@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "../src/styles/navbar-hovers.css";
+@import "../src/styles/f1-colors.css";
 @import "tw-animate-css";
 
 @custom-variant dark (&:is(.dark *));

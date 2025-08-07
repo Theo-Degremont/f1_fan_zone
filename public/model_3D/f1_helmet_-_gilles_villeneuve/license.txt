@@ -1,0 +1,11 @@
+Model Information:
+* title:	F1 Helmet - Gilles Villeneuve
+* source:	https://sketchfab.com/3d-models/f1-helmet-gilles-villeneuve-387af5ee918d4130bbd5c8936dffe394
+* author:	nielsvalckenaere (https://sketchfab.com/nielsvalckenaere)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "F1 Helmet - Gilles Villeneuve" (https://sketchfab.com/3d-models/f1-helmet-gilles-villeneuve-387af5ee918d4130bbd5c8936dffe394) by nielsvalckenaere (https://sketchfab.com/nielsvalckenaere) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
