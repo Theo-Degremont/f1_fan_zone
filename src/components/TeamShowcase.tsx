@@ -9,7 +9,7 @@ export default function TeamShowcase() {
   const [teams, setTeams] = useState<Team[]>([])
   const [currentTeamIndex, setCurrentTeamIndex] = useState(0)
   const [isAnimating, setIsAnimating] = useState(false)
-  const [isVisible, setIsVisible] = useState(false)
+  const [isVisible, setIsVisible] = useState(true)
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const carRef = useRef<HTMLDivElement>(null)
@@ -52,8 +52,8 @@ export default function TeamShowcase() {
         }
       },
       {
-        threshold: 0.2,
-        rootMargin: '0px 0px -100px 0px'
+        threshold: 0.1, // Réduire le seuil pour déclencher plus tôt
+        rootMargin: '50px 0px 50px 0px' // Ajouter une marge pour déclencher avant que l'élément soit complètement visible
       }
     )
 
@@ -147,6 +147,10 @@ export default function TeamShowcase() {
 
   const currentTeam = teams[currentTeamIndex]
 
+  // Debug: afficher les informations de l'équipe actuelle
+  console.log('Équipe actuelle:', currentTeam?.name, 'Key:', currentTeam?.key)
+  console.log('isVisible:', isVisible, 'isAnimating:', isAnimating)
+
   return (
     <div className="grid lg:grid-cols-2 gap-5 items-center w-full">
       <div className={`space-y-5 transition-all duration-500 ${isAnimating ? 'opacity-0 translate-y-4' : 'opacity-100 translate-y-0'}`}>
@@ -215,12 +219,18 @@ export default function TeamShowcase() {
             src={`/images/team_cars/${currentTeam.key}_f1_cars.png`}
             alt={`${currentTeam.name} F1 car`}
             fill
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             className="object-contain group-hover:scale-105 transition-transform duration-700"
             onError={(e) => {
+              console.log(`Erreur de chargement de l'image: /images/team_cars/${currentTeam.key}_f1_cars.png`)
               // Fallback vers une voiture par défaut en cas d'erreur
               const target = e.target as HTMLImageElement
               target.src = '/images/team_cars/ferrari_f1_cars.png'
             }}
+            onLoad={() => {
+              console.log(`Image chargée avec succès: /images/team_cars/${currentTeam.key}_f1_cars.png`)
+            }}
+            priority={false}
           />
           
           <div 
