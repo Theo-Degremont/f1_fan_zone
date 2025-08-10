@@ -8,11 +8,12 @@ import F1HelmetViewer from '../src/components/3D/3DHelmet'; // Assuming this is 
 import Glowline from '@/src/components/glowline';
 import { RippleButton } from '../src/components/animate-ui/buttons/ripple';
 import TeamShowcase from '../src/components/TeamShowcase';
-import NextRace from '../src/components/NextRace';
+import NextRace from '../src/components/NextRaceSection';
+import NewsSection from '../src/components/NewsSection';
 
 export default function Home() {
   return (
-    <div className="min-h-screen relative">
+    <div className="min-h-screen relative pt-20">
       <NavBar />
       <BubbleBackground
       interactive = {true}
@@ -84,6 +85,14 @@ export default function Home() {
       <section className="bg-f1-gray-800 py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
           <NextRace />
+        </div>
+      </section>
+      <Glowline orientation="horizontal" position="100%" className="bottom-0" />
+      
+      {/* Section News */}
+      <section className="bg-f1-gray-900 py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+          <NewsSection />
         </div>
       </section>
     </div>
