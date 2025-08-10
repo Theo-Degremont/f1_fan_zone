@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react'
 import Image from 'next/image'
+import Glowline from '@/src/components/glowline';
 
 interface Team {
   id: string
@@ -181,7 +182,6 @@ export default function TeamShowcase() {
 
   return (
     <div className="grid lg:grid-cols-2 gap-5 items-center w-full">
-      
       <div className={`space-y-5 transition-all duration-500 ${isAnimating ? 'opacity-0 translate-y-4' : 'opacity-100 translate-y-0'}`}>
         
         <div className="relative group">

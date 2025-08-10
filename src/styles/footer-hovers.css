@@ -1,0 +1,119 @@
+/* Hovers spécialisés pour le Footer F1 Fan Zone */
+
+/* Hover pour les réseaux sociaux (Facebook, Instagram, TikTok) */
+.social-media-hover {
+  background-color: #555555; /* f1-gray-600 */
+  transition: all 0.3s ease;
+  transform: scale(1);
+}
+
+.social-media-hover:hover {
+  background-color: #C41700 !important; /* f1-red-600 - couleur primaire */
+  transform: scale(1.1);
+}
+
+.social-media-hover svg {
+  color: #E5E7EB; /* f1-gray-100 */
+  transition: color 0.3s ease;
+}
+
+.social-media-hover:hover svg {
+  color: white !important;
+}
+
+/* Hover pour les liens légaux avec trait en dessous (même style que bouton connexion) */
+.legal-link-hover {
+  position: relative;
+  color: rgba(229, 231, 235, 0.7); /* f1-gray-100/70 */
+  transition: all 0.3s ease;
+}
+
+.legal-link-hover::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background-color: #C41700; /* f1-red-600 */
+  transition: all 0.3s ease;
+  transform: translateX(-50%);
+}
+
+
+.legal-link-hover:hover::before {
+  width: 100%;
+}
+
+/* Hover pour le logo avec effet de glow */
+.footer-logo-hover {
+  transition: transform 0.3s ease;
+}
+
+.footer-logo-hover:hover {
+  transform: scale(1.05) rotate(2deg);
+}
+
+/* Hover pour le bouton scroll to top */
+.scroll-to-top-hover {
+  background-color: #C41700; /* f1-red-600 */
+  transition: all 0.3s ease;
+  transform: translateY(0);
+}
+
+.scroll-to-top-hover:hover {
+  background-color: #B91C1C !important; /* f1-red-700 */
+  transform: translateY(-4px);
+  box-shadow: 0 4px 12px rgba(196, 23, 0, 0.3); /* shadow-f1-red-600/30 */
+}
+
+.scroll-to-top-hover:hover svg {
+  animation: bounce 1s infinite;
+}
+
+/* Animation bounce pour l'icône du bouton scroll */
+@keyframes bounce {
+  0%, 20%, 53%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40%, 43% {
+    transform: translateY(-4px);
+  }
+  70% {
+    transform: translateY(-2px);
+  }
+  90% {
+    transform: translateY(-1px);
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .social-media-hover:hover {
+    transform: scale(1.05); /* Moins de scale sur mobile */
+  }
+  
+  .legal-link-hover {
+    font-size: 0.875rem; /* text-sm */
+  }
+}
+
+/* Accessibilité - réduction des animations si préféré par l'utilisateur */
+@media (prefers-reduced-motion: reduce) {
+  .social-media-hover,
+  .legal-link-hover,
+  .footer-logo-hover,
+  .scroll-to-top-hover {
+    transition: none;
+  }
+  
+  .social-media-hover:hover,
+  .footer-logo-hover:hover,
+  .scroll-to-top-hover:hover {
+    transform: none;
+  }
+  
+  .scroll-to-top-hover:hover svg {
+    animation: none;
+  }
+}

@@ -10,11 +10,12 @@ import { RippleButton } from '../src/components/animate-ui/buttons/ripple';
 import TeamShowcase from '../src/components/TeamShowcase';
 import NextRace from '../src/components/NextRaceSection';
 import NewsSection from '../src/components/NewsSection';
+import Footer from '../src/components/Footer';
 
 export default function Home() {
   return (
     <div className="min-h-screen relative pt-20">
-      <NavBar />
+
       <BubbleBackground
       interactive = {true}
         colors={{ 
@@ -27,6 +28,7 @@ export default function Home() {
         }}
         className="fixed inset-0 -z-10"
       />
+      <NavBar />
       <section className="relative min-h-screen flex items-center z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
@@ -73,13 +75,13 @@ export default function Home() {
           </div>
         </div>
       </section>
-      <Glowline orientation="horizontal" position="40.8%" className="bottom-0" />
+      <Glowline orientation="horizontal" position="24.4%" className="bottom-0" />
       <section className="bg-f1-gray-700 py-20">
         <div className="bg-f1-gray-700 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
           <TeamShowcase />
         </div>
       </section>
-      <Glowline orientation="horizontal" position="64.9%" className="bottom-0" />
+      <Glowline orientation="horizontal" position="39.1%" className="bottom-0" />
       
       {/* Section Prochaine Course */}
       <section className="bg-f1-gray-800 py-20">
@@ -87,14 +89,16 @@ export default function Home() {
           <NextRace />
         </div>
       </section>
-      <Glowline orientation="horizontal" position="100%" className="bottom-0" />
+      <Glowline orientation="horizontal" position="60%" className="bottom-0" />
       
       {/* Section News */}
       <section className="bg-f1-gray-900 py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
           <NewsSection />
         </div>
-      </section>
+      </section>      
+      {/* Footer */}
+      <Footer />
     </div>
   );
 }
