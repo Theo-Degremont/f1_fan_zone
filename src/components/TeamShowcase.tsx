@@ -2,140 +2,46 @@
 
 import { useState, useEffect, useRef } from 'react'
 import Image from 'next/image'
-import Glowline from '@/src/components/glowline';
-
-interface Team {
-  id: string
-  name: string
-  founded: string
-  victories: number
-  grandPrix: number
-  championships: number
-  logoPath: string
-  carPath: string
-  primaryColor: string
-}
-
-const teams: Team[] = [
-  {
-    id: 'red-bull',
-    name: 'Red Bull Racing',
-    founded: '2005',
-    victories: 95,
-    grandPrix: 380,
-    championships: 6,
-    logoPath: '/images/team_logo/logo_red-bull.png',
-    carPath: '/images/team_cars/red-bull_f1_cars.png',
-    primaryColor: '#0600EF'
-  },
-  {
-    id: 'ferrari',
-    name: 'Scuderia Ferrari',
-    founded: '1950',
-    victories: 243,
-    grandPrix: 1050,
-    championships: 16,
-    logoPath: '/images/team_logo/logo_ferrari.png',
-    carPath: '/images/team_cars/ferrari_f1_cars.png',
-    primaryColor: '#DC143C'
-  },
-  {
-    id: 'mercedes',
-    name: 'Mercedes-AMG Petronas',
-    founded: '2010',
-    victories: 115,
-    grandPrix: 280,
-    championships: 8,
-    logoPath: '/images/team_logo/logo_mercedes.png',
-    carPath: '/images/team_cars/mercedes_f1_cars.png',
-    primaryColor: '#00D2BE'
-  },
-  {
-    id: 'mclaren',
-    name: 'McLaren F1 Team',
-    founded: '1966',
-    victories: 183,
-    grandPrix: 920,
-    championships: 8,
-    logoPath: '/images/team_logo/logo_mclaren.png',
-    carPath: '/images/team_cars/mclaren_f1_cars.png',
-    primaryColor: '#FF8700'
-  },
-  {
-    id: 'alpine',
-    name: 'Alpine F1 Team',
-    founded: '1981',
-    victories: 17,
-    grandPrix: 450,
-    championships: 2,
-    logoPath: '/images/team_logo/logo_alpine.png',
-    carPath: '/images/team_cars/alpine_f1_cars.png',
-    primaryColor: '#0090FF'
-  },
-  {
-    id: 'aston-martin',
-    name: 'Aston Martin F1',
-    founded: '2021',
-    victories: 1,
-    grandPrix: 60,
-    championships: 0,
-    logoPath: '/images/team_logo/logo_aston-martin.png',
-    carPath: '/images/team_cars/aston-martin_f1_cars.png',
-    primaryColor: '#006F62'
-  },
-  {
-    id: 'williams',
-    name: 'Williams Racing',
-    founded: '1977',
-    victories: 114,
-    grandPrix: 790,
-    championships: 9,
-    logoPath: '/images/team_logo/logo_williams.png',
-    carPath: '/images/team_cars/williams_f1_cars.png',
-    primaryColor: '#005AFF'
-  },
-  {
-    id: 'haas',
-    name: 'Haas F1 Team',
-    founded: '2016',
-    victories: 0,
-    grandPrix: 160,
-    championships: 0,
-    logoPath: '/images/team_logo/logo_haas.png',
-    carPath: '/images/team_cars/haas_f1_cars.png',
-    primaryColor: '#FFFFFF'
-  },
-  {
-    id: 'racing-bulls',
-    name: 'Racing Bulls',
-    founded: '2016',
-    victories: 0,
-    grandPrix: 160,
-    championships: 0,
-    logoPath: '/images/team_logo/logo_racing-bulls.png',
-    carPath: '/images/team_cars/racing-bulls_f1_cars.png',
-    primaryColor: '#009dffff'
-  },
-  {
-    id: 'stake',
-    name: 'Stake F1 Team',
-    founded: '2024',
-    victories: 0,
-    grandPrix: 160,
-    championships: 0,
-    logoPath: '/images/team_logo/logo_stake.png',
-    carPath: '/images/team_cars/stake_f1_cars.png',
-    primaryColor: '#0ed700ff'
-  },
-
-
-]
+import { TeamsApiService } from '../services/teamsApi'
+import { Team } from '../modeles/teamModel'
 
 export default function TeamShowcase() {
+  const [teams, setTeams] = useState<Team[]>([])
   const [currentTeamIndex, setCurrentTeamIndex] = useState(0)
   const [isAnimating, setIsAnimating] = useState(false)
   const [isVisible, setIsVisible] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
   const carRef = useRef<HTMLDivElement>(null)
+
+  // Charger les données depuis l'API
+  useEffect(() => {
+    const loadTeams = async () => {
+      try {
+        setIsLoading(true)
+        setError(null)
+        
+        const apiTeams = await TeamsApiService.getAllTeams()
+        
+        // Trier les équipes par nombre de championnats puis par victoires
+        apiTeams.sort((a, b) => {
+          if (b.nb_championship !== a.nb_championship) {
+            return b.nb_championship - a.nb_championship
+          }
+          return b.nb_victory - a.nb_victory
+        })
+        
+        setTeams(apiTeams)
+      } catch (err) {
+        console.error('Erreur lors du chargement des équipes:', err)
+        setError('Impossible de charger les données des équipes. Vérifiez que l\'API est démarrée.')
+      } finally {
+        setIsLoading(false)
+      }
+    }
+
+    loadTeams()
+  }, [])
 
   // Intersection Observer pour détecter le scroll
   useEffect(() => {
@@ -146,8 +52,8 @@ export default function TeamShowcase() {
         }
       },
       {
-        threshold: 0.2, // Déclenche quand 20% de l'élément est visible
-        rootMargin: '0px 0px -100px 0px' // Déclenche un peu avant que l'élément soit complètement visible
+        threshold: 0.2,
+        rootMargin: '0px 0px -100px 0px'
       }
     )
 
@@ -162,7 +68,10 @@ export default function TeamShowcase() {
     }
   }, [])
 
+  // Rotation automatique des équipes
   useEffect(() => {
+    if (teams.length === 0) return
+
     const interval = setInterval(() => {
       setIsAnimating(true)
       
@@ -176,7 +85,65 @@ export default function TeamShowcase() {
     }, 10000)
 
     return () => clearInterval(interval)
-  }, [])
+  }, [teams.length])
+
+  // État de chargement
+  if (isLoading) {
+    return (
+      <div className="grid lg:grid-cols-2 gap-5 items-center w-full">
+        <div className="space-y-5">
+          <div className="relative w-full h-96 lg:h-[400px] bg-f1-gray-600 animate-pulse rounded-lg">
+            <div className="absolute inset-0 flex flex-col justify-center items-center text-center p-8">
+              <div className="h-12 bg-f1-gray-500 rounded mb-3 w-3/4"></div>
+              <div className="h-6 bg-f1-gray-500 rounded mb-8 w-1/2"></div>
+              <div className="grid grid-cols-3 gap-4 w-full max-w-md">
+                <div className="h-16 bg-f1-gray-500 rounded"></div>
+                <div className="h-16 bg-f1-gray-500 rounded"></div>
+                <div className="h-16 bg-f1-gray-500 rounded"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="w-full h-96 lg:h-[500px] bg-f1-gray-600 animate-pulse rounded-lg"></div>
+      </div>
+    )
+  }
+
+  // État d'erreur
+  if (error || teams.length === 0) {
+    return (
+      <div className="grid lg:grid-cols-2 gap-5 items-center w-full">
+        <div className="text-center text-f1-gray-100 space-y-6">
+          <div className="text-6xl">🏁</div>
+          <h3 className="text-2xl font-bold mb-4">Connexion à l'API en cours...</h3>
+          <p className="text-f1-gray-100/70 max-w-md mx-auto">
+            {error || 'Aucune équipe trouvée. Assurez-vous que votre API est démarrée sur'} 
+            <br />
+            <code className="bg-f1-gray-600 px-2 py-1 rounded text-sm mt-2 inline-block">
+              {process.env.NEXT_PUBLIC_API_BASE_URL}
+            </code>
+          </p>
+          <div className="space-y-3">
+            <button 
+              onClick={() => window.location.reload()} 
+              className="block mx-auto px-6 py-2 bg-f1-red-600 text-white rounded hover:bg-f1-red-700 transition-colors"
+            >
+              Réessayer
+            </button>
+            <p className="text-sm text-f1-gray-100/50">
+              Endpoint: <code>/api/teams</code>
+            </p>
+          </div>
+        </div>
+        <div className="w-full h-96 lg:h-[500px] bg-f1-gray-600/30 rounded-lg flex items-center justify-center">
+          <div className="text-center text-f1-gray-100/50">
+            <div className="text-4xl mb-4">📡</div>
+            <p>En attente des données API...</p>
+          </div>
+        </div>
+      </div>
+    )
+  }
 
   const currentTeam = teams[currentTeamIndex]
 
@@ -187,10 +154,15 @@ export default function TeamShowcase() {
         <div className="relative group">
           <div className="relative w-full h-96 lg:h-[400px] mx-auto lg:mx-0">
             <Image
-              src={currentTeam.logoPath}
+              src={`/images/team_logo/logo_${currentTeam.key}.png`}
               alt={`${currentTeam.name} logo`}
               fill
-              className={currentTeam.id=='alpine' ? "object-contain grayscale brightness-25 contrast-105 " : "object-contain grayscale brightness-50 contrast-105 "}
+              className={currentTeam.key === 'alpine' ? "object-contain grayscale brightness-25 contrast-105" : "object-contain grayscale brightness-50 contrast-105"}
+              onError={(e) => {
+                // Fallback vers un logo par défaut en cas d'erreur
+                const target = e.target as HTMLImageElement
+                target.src = '/images/team_logo/logo_ferrari.png'
+              }}
             />
           </div>
           
@@ -199,24 +171,29 @@ export default function TeamShowcase() {
               {currentTeam.name}
             </h2>
             <p className="text-xl text-f1-gray-100/90 drop-shadow-lg mb-8">
-              Fondée en {currentTeam.founded}
+              Fondée en {new Date(currentTeam.date_start).getFullYear()}
             </p>
             
-            <div className="grid grid-cols-3 gap-1 w-full max-w-md">
+            <div className="grid grid-cols-4 gap-1 w-full max-w-lg">
               
               <div>
-                <div className="text-3xl font-bold drop-shadow-lg">{currentTeam.victories}</div>
-                <div className="text-sm text-f1-gray-100/80 drop-shadow-md">Victoires</div>
+                <div className="text-2xl lg:text-3xl font-bold drop-shadow-lg">{currentTeam.nb_victory}</div>
+                <div className="text-xs lg:text-sm text-f1-gray-100/80 drop-shadow-md">Victoires</div>
               </div>
 
               <div>
-                <div className="text-3xl font-bold drop-shadow-lg">{currentTeam.grandPrix}</div>
-                <div className="text-sm text-f1-gray-100/80 drop-shadow-md">Grands Prix</div>
+                <div className="text-2xl lg:text-3xl font-bold drop-shadow-lg">{currentTeam.nb_race}</div>
+                <div className="text-xs lg:text-sm text-f1-gray-100/80 drop-shadow-md">Courses</div>
               </div>
 
               <div>
-                <div className="text-3xl font-bold drop-shadow-lg">{currentTeam.championships}</div>
-                <div className="text-sm text-f1-gray-100/80 drop-shadow-md">Championnats</div>
+                <div className="text-2xl lg:text-3xl font-bold drop-shadow-lg">{currentTeam.nb_championship}</div>
+                <div className="text-xs lg:text-sm text-f1-gray-100/80 drop-shadow-md">Titres</div>
+              </div>
+
+              <div>
+                <div className="text-2xl lg:text-3xl font-bold drop-shadow-lg">{currentTeam.nb_podiums}</div>
+                <div className="text-xs lg:text-sm text-f1-gray-100/80 drop-shadow-md">Podiums</div>
               </div>
             </div>
           </div>
@@ -235,16 +212,21 @@ export default function TeamShowcase() {
       >
         <div className="relative w-full h-96 lg:h-[500px] group">
           <Image
-            src={currentTeam.carPath}
+            src={`/images/team_cars/${currentTeam.key}_f1_cars.png`}
             alt={`${currentTeam.name} F1 car`}
             fill
             className="object-contain group-hover:scale-105 transition-transform duration-700"
+            onError={(e) => {
+              // Fallback vers une voiture par défaut en cas d'erreur
+              const target = e.target as HTMLImageElement
+              target.src = '/images/team_cars/ferrari_f1_cars.png'
+            }}
           />
           
           <div 
             className="absolute inset-0 rounded-lg opacity-20 group-hover:opacity-30 transition-opacity duration-700 blur-xl"
             style={{ 
-              background: `radial-gradient(circle, ${currentTeam.primaryColor}40 0%, transparent 70%)` 
+              background: `radial-gradient(circle, ${currentTeam.color}40 0%, transparent 70%)` 
             }}
           />
         </div>

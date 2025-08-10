@@ -6,7 +6,8 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "test:api": "tsx test-api.ts"
   },
   "dependencies": {
     "@react-three/drei": "^10.6.1",
@@ -29,6 +30,7 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "tailwindcss": "^4",
+    "tsx": "^4.20.3",
     "tw-animate-css": "^1.3.6",
     "typescript": "^5"
   }
