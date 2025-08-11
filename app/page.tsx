@@ -75,13 +75,13 @@ export default function Home() {
           </div>
         </div>
       </section>
-      <Glowline orientation="horizontal" position="24.4%" className="bottom-0" />
+      <Glowline orientation="horizontal" position="25%" className="bottom-0" />
       <section className="bg-f1-gray-700 py-20">
         <div className="bg-f1-gray-700 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
           <TeamShowcase />
         </div>
       </section>
-      <Glowline orientation="horizontal" position="39.1%" className="bottom-0" />
+      <Glowline orientation="horizontal" position="40.1%" className="bottom-0" />
       
       {/* Section Prochaine Course */}
       <section className="bg-f1-gray-800 py-20">
@@ -89,7 +89,7 @@ export default function Home() {
           <NextRace />
         </div>
       </section>
-      <Glowline orientation="horizontal" position="60%" className="bottom-0" />
+      <Glowline orientation="horizontal" position="59.5%" className="bottom-0" />
       
       {/* Section News */}
       <section className="bg-f1-gray-900 py-20">

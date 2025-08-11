@@ -1,8 +1,8 @@
 import { Team } from '../modeles/teamModel';
 
 // Configuration de l'API depuis les variables d'environnement
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:3000';
-const API_KEY = process.env.NEXT_PUBLIC_API_KEY || 'f1-api-key-2025-secure-access-f1fanzone-production';
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+const API_KEY = process.env.NEXT_PUBLIC_API_KEY || 'api-key-default';
 
 // Service pour récupérer les équipes depuis votre API
 export class TeamsApiService {

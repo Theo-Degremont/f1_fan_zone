@@ -41,7 +41,7 @@ const newsData: INews[] = [
     _id: "507f1f77bcf86cd799439011",
     title: "Max Verstappen remporte son 4ème titre mondial consécutif",
     content: "Le pilote néerlandais de Red Bull Racing décroche son quatrième championnat du monde consécutif lors du Grand Prix de Las Vegas, confirmant sa domination sur la Formule 1. Cette victoire marque une nouvelle ère dans l'histoire de la F1.",
-    image_url: "https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+    image_url: "https://media.api-sports.io/formula-1/circuits/6.png",
     link: "https://www.formula1.com/en/latest/article.max-verstappen-wins-fourth-title",
     author: "Équipe F1 Fan Zone",
     published_at: new Date('2024-11-25'),
