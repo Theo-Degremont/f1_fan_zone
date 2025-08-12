@@ -12,6 +12,7 @@ interface UseAuthReturn {
   logout: () => void;
   clearError: () => void;
   checkEmailAvailability: (email: string) => Promise<{ isAvailable: boolean; message?: string }>;
+  refreshTokens: () => Promise<void>;
 }
 
 export function useAuth(): UseAuthReturn {
@@ -22,15 +23,33 @@ export function useAuth(): UseAuthReturn {
 
   // Vérifier si l'utilisateur est déjà connecté au chargement
   useEffect(() => {
-    const checkAuth = () => {
-      const isAuth = authService.isAuthenticated();
-      // Ne pas définir automatiquement l'utilisateur comme authentifié
-      // juste parce que des tokens existent - ils pourraient être expirés
-      // L'authentification sera confirmée lors d'une action utilisateur
-      if (isAuth) {
-        // Tokens présents mais on ne définit pas isAuthenticated
-        // L'utilisateur devra se connecter pour confirmer
-        console.log('Tokens trouvés dans le localStorage');
+    const checkAuth = async () => {
+      try {
+        // Vérifier et rafraîchir les tokens si nécessaire
+        const tokensValid = await authService.ensureValidTokens();
+        
+        if (tokensValid) {
+          setIsAuthenticated(true);
+          const tokens = authService.getTokens();
+          if (tokens.accessToken) {
+            // Optionnel : Décoder le token pour récupérer les infos utilisateur
+            setUser({
+              id: 0,
+              username: 'Utilisateur',
+              email: '',
+              favorite_team_id: null,
+              favorite_driver_id: null
+            });
+          }
+        } else {
+          // Tokens invalides ou expirés
+          setIsAuthenticated(false);
+          setUser(null);
+        }
+      } catch (error) {
+        console.error('Erreur lors de la vérification des tokens:', error);
+        setIsAuthenticated(false);
+        setUser(null);
       }
     };
 
@@ -116,6 +135,23 @@ export function useAuth(): UseAuthReturn {
     setError(null);
   };
 
+  // Fonction pour rafraîchir manuellement les tokens
+  const refreshTokens = async (): Promise<void> => {
+    try {
+      await authService.refreshTokens();
+      // Après rafraîchissement réussi, l'utilisateur reste connecté
+      console.log('✅ Tokens rafraîchis depuis useAuth');
+    } catch (err) {
+      const errorMessage = err instanceof Error ? err.message : 'Erreur lors du rafraîchissement';
+      setError(errorMessage);
+      
+      // En cas d'échec du rafraîchissement, déconnecter l'utilisateur
+      setIsAuthenticated(false);
+      setUser(null);
+      throw err;
+    }
+  };
+
   // Fonction pour vérifier la disponibilité d'un email
   const checkEmailAvailability = async (email: string): Promise<{ isAvailable: boolean; message?: string }> => {
     try {
@@ -135,6 +171,7 @@ export function useAuth(): UseAuthReturn {
     login,
     logout,
     clearError,
-    checkEmailAvailability
+    checkEmailAvailability,
+    refreshTokens
   };
 }

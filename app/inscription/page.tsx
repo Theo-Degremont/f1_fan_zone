@@ -172,10 +172,10 @@ export default function InscriptionPage() {
       // Appeler l'API d'inscription
       await register(cleanData)
       
-      // Si succès, montrer le toast et rediriger
+      // Si succès, montrer le toast de succès
       showToast('Inscription réussie ! Bienvenue dans la communauté F1 Fan Zone !', 'success')
       
-      // Redirection sera gérée par useEffect lors du changement d'état d'authentification
+      // La navbar se mettra à jour automatiquement grâce au hook useAuth
       
     } catch (error) {
       console.error('Erreur lors de l\'inscription:', error)
