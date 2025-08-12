@@ -27,12 +27,6 @@ const config: Config = {
           100: '#F2F2F2',
           50: '#FFFFFF',
         },
-        // Couleurs des équipes
-        'mercedes': '#00D2BE',
-        'red-bull': '#0600EF',
-        'ferrari': '#DC143C',
-        'mclaren': '#FF8700',
-        'alpine': '#0090FF',
       },
       fontFamily: {
         'f1': ['Racing Sans One', 'sans-serif'],
