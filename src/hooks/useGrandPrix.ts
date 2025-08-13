@@ -1,22 +1,11 @@
 import { useState, useCallback } from 'react';
 import { authService } from '../services/authService';
+import { Race } from '../modeles/raceModel';
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:3002';
 
-// Interface pour un Grand Prix
-export interface GrandPrix {
-  id: number;
-  race_name: string;
-  city: string;
-  country: string;
-  started_at: string;
-  track_name: string;
-  image_url: string;
-  duration: number;
-  nb_curve: number;
-  nb_laps: number;
-  race_results: any[];
-}
+// Alias pour une meilleure lisibilité
+export type GrandPrix = Race;
 
 interface UseGrandPrixReturn {
   grandPrixList: GrandPrix[];

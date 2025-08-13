@@ -90,7 +90,7 @@ export function GrandPrixCard({ grandPrix }: GrandPrixCardProps) {
         {/* En-tête avec nom du Grand Prix */}
         <div className="flex items-center gap-3 mb-4">
           <span className="text-3xl">
-            {getCountryFlag(grandPrix.country)}
+            {getCountryFlag(grandPrix.country || '')}
           </span>
           <div>
             <h3 className="text-lg font-bold text-f1-gray-100">
@@ -105,7 +105,7 @@ export function GrandPrixCard({ grandPrix }: GrandPrixCardProps) {
         {/* Image du circuit */}
         <div className="mb-4">
           <img 
-            src={grandPrix.image_url} 
+            src={grandPrix.image_url || '/placeholder-circuit.svg'} 
             alt={`Circuit ${grandPrix.track_name}`}
             className="w-full h-32 object-contain bg-white/5 rounded-lg"
             onError={(e) => {
@@ -117,7 +117,7 @@ export function GrandPrixCard({ grandPrix }: GrandPrixCardProps) {
         {/* Informations du circuit */}
         <div className="flex text-center align-items-center space-y-1">
           <h4 className="text-f1-gray-100/60">
-            {grandPrix.track_name}, {grandPrix.city}, {grandPrix.country}
+            {grandPrix.track_name}, {grandPrix.city}, {grandPrix.country || 'Non spécifié'}
           </h4>
         </div>
       </div>

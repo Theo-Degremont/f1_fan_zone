@@ -12,7 +12,7 @@ export default function GrandPrixPage() {
   const { grandPrixList, isLoading, error, loadGrandPrixBySeason, clearError } = useGrandPrix()
 
   // États
-  const [selectedYear, setSelectedYear] = useState<number>(2024)
+  const [selectedYear, setSelectedYear] = useState<number>(2025)
   const [availableYears] = useState<number[]>([2025, 2024, 2023, 2022, 2021, 2020])
 
   // Charger les données des Grands Prix
