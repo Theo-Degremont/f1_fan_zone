@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useState, useEffect, useCallback } from 'react'
+import { generateToastId } from '../utils/idGenerator'
 
 interface ToastProps {
   message: string
@@ -8,9 +9,10 @@ interface ToastProps {
   isVisible: boolean
   onClose: () => void
   duration?: number
+  index?: number
 }
 
-export function Toast({ message, type, isVisible, onClose, duration = 4000 }: ToastProps) {
+export function Toast({ message, type, isVisible, onClose, duration = 4000, index = 0 }: ToastProps) {
   useEffect(() => {
     if (isVisible) {
       const timer = setTimeout(() => {
@@ -24,7 +26,9 @@ export function Toast({ message, type, isVisible, onClose, duration = 4000 }: To
   if (!isVisible) return null
 
   const getToastStyles = () => {
-    const baseStyles = "fixed top-4 right-4 z-50 px-6 py-4 rounded-lg shadow-lg border transition-all duration-300 transform"
+    // Calculer la position en fonction de l'index pour empiler les toasts
+    const topOffset = 16 + (index * 80) // 16px de base + 80px par toast
+    const baseStyles = `fixed right-4 z-50 px-6 py-4 rounded-lg shadow-lg border transition-all duration-300 transform max-w-md`
     
     switch (type) {
       case 'success':
@@ -72,7 +76,10 @@ export function Toast({ message, type, isVisible, onClose, duration = 4000 }: To
   }
 
   return (
-    <div className={getToastStyles()}>
+    <div 
+      className={getToastStyles()}
+      style={{ top: `${16 + (index * 80)}px` }}
+    >
       <div className="flex items-center">
         {getIcon()}
         <span className="text-sm font-medium">{message}</span>
@@ -92,14 +99,16 @@ export function Toast({ message, type, isVisible, onClose, duration = 4000 }: To
 // Hook pour gérer les toasts
 export function useToast() {
   const [toasts, setToasts] = useState<Array<{
-    id: number
+    id: string
     message: string
     type: 'success' | 'error' | 'warning' | 'info'
     isVisible: boolean
   }>>([])
 
   const showToast = useCallback((message: string, type: 'success' | 'error' | 'warning' | 'info' = 'info') => {
-    const id = Date.now()
+    // Générer un ID unique avec l'utilitaire dédié
+    const id = generateToastId()
+    
     const newToast = {
       id,
       message,
@@ -110,22 +119,23 @@ export function useToast() {
     setToasts(prev => [...prev, newToast])
   }, [])
 
-  const hideToast = useCallback((id: number) => {
+  const hideToast = useCallback((id: string) => {
     setToasts(prev => prev.filter(toast => toast.id !== id))
   }, [])
 
   const ToastContainer = () => (
-    <>
-      {toasts.map(toast => (
+    <div className="toast-container">
+      {toasts.map((toast, index) => (
         <Toast
           key={toast.id}
           message={toast.message}
           type={toast.type}
           isVisible={toast.isVisible}
           onClose={() => hideToast(toast.id)}
+          index={index}
         />
       ))}
-    </>
+    </div>
   )
 
   return {
