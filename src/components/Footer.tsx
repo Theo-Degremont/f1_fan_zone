@@ -3,7 +3,6 @@
 import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import Glowline from './glowline'
 import '../styles/footer-hovers.css'
 import { FaFacebookF, FaInstagram, FaTiktok} from "react-icons/fa";
 
@@ -101,10 +100,6 @@ export default function Footer() {
           </div>
         </div>
       </div>
-
-      {/* Séparateur Glowline */}
-      <Glowline orientation="horizontal" position="50%" className="relative" />
-
       {/* Deuxième partie */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         

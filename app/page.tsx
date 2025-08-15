@@ -5,7 +5,6 @@ import Model3DViewer from '../src/components/3D/3DHelmet'
 import NavBar from "../src/components/NavBar";
 import { BubbleBackground } from '../src/components/animate-ui/backgrounds/bubble';
 import F1HelmetViewer from '../src/components/3D/3DHelmet'; // Assuming this is the correct import for the 3D model viewer
-import Glowline from '@/src/components/glowline';
 import { RippleButton } from '../src/components/animate-ui/buttons/ripple';
 import TeamShowcase from '../src/components/TeamShowcase';
 import NextRace from '../src/components/NextRaceSection';
@@ -75,22 +74,18 @@ export default function Home() {
           </div>
         </div>
       </section>
-      <Glowline orientation="horizontal" position="25%" className="bottom-0" />
       <section className="bg-f1-gray-700 py-20">
         <div className="bg-f1-gray-700 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
           <TeamShowcase />
         </div>
       </section>
-      <Glowline orientation="horizontal" position="40.1%" className="bottom-0" />
       
       {/* Section Prochaine Course */}
       <section className="bg-f1-gray-800 py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
           <NextRace />
         </div>
-      </section>
-      <Glowline orientation="horizontal" position="59.5%" className="bottom-0" />
-      
+      </section>      
       {/* Section News */}
       <section className="bg-f1-gray-900 py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">

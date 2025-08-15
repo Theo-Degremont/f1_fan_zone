@@ -28,7 +28,7 @@ export function useClassement(): UseClassementReturn {
       setError(null);
 
       // Appel API réel avec authentification
-      const response = await authService.authenticatedFetch(`${API_BASE_URL}/api/classements/season/${year}`);
+            const response = await authService.authenticatedFetch(`http://localhost:3002/api/classements-drivers/season/${year}`);
       
       if (!response.ok) {
         throw new Error(`Erreur HTTP: ${response.status}`);

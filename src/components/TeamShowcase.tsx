@@ -1,5 +1,4 @@
 'use client'
-
 import { useState, useEffect, useRef } from 'react'
 import Image from 'next/image'
 import { TeamsApiService } from '../services/teamsApi'
@@ -152,6 +151,7 @@ export default function TeamShowcase() {
   console.log('isVisible:', isVisible, 'isAnimating:', isAnimating)
 
   return (
+    <>    
     <div className="grid lg:grid-cols-2 gap-5 items-center w-full">
       <div className={`space-y-5 transition-all duration-500 ${isAnimating ? 'opacity-0 translate-y-4' : 'opacity-100 translate-y-0'}`}>
         
@@ -242,5 +242,6 @@ export default function TeamShowcase() {
         </div>
       </div>
     </div>
+    </>
   )
 }

@@ -1,3 +1,4 @@
+
 import { Driver, Team } from './teamModel';
 
 // Interface pour un classement de pilote de la page classement
@@ -20,11 +21,42 @@ export interface ClassementPilote {
   };
 }
 
-// Interface pour la réponse API du classement
+// Interface pour un classement d'équipe
+export interface ClassementTeam {
+  id: number;
+  season: number;
+  id_team: number;
+  position: number;
+  points: number;
+  nb_wins: number;
+  nb_points: number;
+  team: {
+    id: number;
+    name: string;
+    date_start: string;
+    date_end: string | null;
+    nb_victory: number;
+    color: string;
+    nb_championship: number;
+    nb_race: number;
+    key: string;
+    nb_podiums: number;
+    nb_pole: number;
+  };
+}
+
+// Interface pour la réponse API du classement pilote
 export interface ClassementResponse {
   season: number;
   totalDrivers: number;
   classements: ClassementPilote[];
+}
+
+// Interface pour la réponse API du classement équipe
+export interface ClassementTeamResponse {
+  season: number;
+  totalTeams: number;
+  teams: ClassementTeam[];
 }
 
 // Interface pour les hooks de classement
