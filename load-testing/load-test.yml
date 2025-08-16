@@ -1,0 +1,46 @@
+config:
+  target: 'http://localhost:3000'
+  phases:
+    - duration: 30
+      arrivalRate: 5
+      name: "Warm up"
+    - duration: 60
+      arrivalRate: 10
+      name: "Normal load"
+    - duration: 30
+      arrivalRate: 15
+      name: "Peak load"
+
+scenarios:
+  - name: "Navigation principale"
+    weight: 40
+    flow:
+      - get:
+          url: "/"
+      - think: 2
+      - get:
+          url: "/classement"
+      - think: 3
+      - get:
+          url: "/grand-prix"
+      - think: 2
+
+  - name: "Tests API Classements"
+    weight: 30
+    flow:
+      - get:
+          url: "/api/classements-drivers/season/2024"
+      - think: 1
+      - get:
+          url: "/api/classements-teams/season/2024"
+      - think: 1
+
+  - name: "Navigation rapide"
+    weight: 30
+    flow:
+      - get:
+          url: "/"
+      - think: 1
+      - get:
+          url: "/classement"
+      - think: 1
