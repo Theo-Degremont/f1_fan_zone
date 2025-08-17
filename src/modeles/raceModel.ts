@@ -1,5 +1,6 @@
 
-import { Driver, Team } from './teamModel';
+import { Driver } from './driverModel';
+import { Team } from './teamModel';
 
 // Interface pour les résultats de course
 export interface RaceResult {

@@ -1,7 +1,6 @@
 'use client'
 
 import React from 'react'
-import Model3DViewer from '../src/components/3D/3DHelmet'
 import NavBar from "../src/components/NavBar";
 import { BubbleBackground } from '../src/components/animate-ui/backgrounds/bubble';
 import F1HelmetViewer from '../src/components/3D/3DHelmet'; // Assuming this is the correct import for the 3D model viewer

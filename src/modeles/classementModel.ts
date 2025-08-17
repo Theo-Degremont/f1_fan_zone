@@ -1,5 +1,6 @@
 
-import { Driver, Team } from './teamModel';
+import { Driver } from './driverModel';
+import { Team } from './teamModel';
 
 // Interface pour un classement de pilote de la page classement
 export interface ClassementPilote {

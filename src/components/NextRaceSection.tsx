@@ -1,39 +1,11 @@
 'use client'
 
-import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import { useNextRace } from '../hooks/useRaces'
+import Countdown from './Countdown'
 
 export default function NextRace() {
   const { race, isLoading, error, refetch } = useNextRace()
-  const [timeLeft, setTimeLeft] = useState({
-    days: 0,
-    hours: 0,
-    minutes: 0,
-    seconds: 0
-  })
-
-  useEffect(() => {
-    if (!race) return
-
-    const calculateTimeLeft = () => {
-      const difference = +new Date(race.started_at) - +new Date()
-      
-      if (difference > 0) {
-        setTimeLeft({
-          days: Math.floor(difference / (1000 * 60 * 60 * 24)),
-          hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
-          minutes: Math.floor((difference / 1000 / 60) % 60),
-          seconds: Math.floor((difference / 1000) % 60)
-        })
-      }
-    }
-
-    calculateTimeLeft()
-    const timer = setInterval(calculateTimeLeft, 1000)
-
-    return () => clearInterval(timer)
-  }, [race])
 
   // Fonction pour obtenir le drapeau du pays
   const getCountryFlag = (country: string) => {
@@ -236,48 +208,14 @@ export default function NextRace() {
           Temps restant avant le départ
         </h4>
         
-        <div className="grid grid-cols-4 gap-4 max-w-2xl mx-auto">
-          
-          {/* Jours */}
-          <div className="bg-f1-gray-800 rounded-2xl p-6 border border-f1-gray-600">
-            <div className="text-4xl lg:text-5xl font-bold text-f1-red-400 mb-2">
-              {timeLeft.days.toString().padStart(2, '0')}
-            </div>
-            <div className="text-sm text-f1-gray-100/60 uppercase tracking-wider">
-              Jours
-            </div>
-          </div>
-
-          {/* Heures */}
-          <div className="bg-f1-gray-800 rounded-2xl p-6 border border-f1-gray-600">
-            <div className="text-4xl lg:text-5xl font-bold text-f1-red-400 mb-2">
-              {timeLeft.hours.toString().padStart(2, '0')}
-            </div>
-            <div className="text-sm text-f1-gray-100/60 uppercase tracking-wider">
-              Heures
-            </div>
-          </div>
-
-          {/* Minutes */}
-          <div className="bg-f1-gray-800 rounded-2xl p-6 border border-f1-gray-600">
-            <div className="text-4xl lg:text-5xl font-bold text-f1-red-400 mb-2">
-              {timeLeft.minutes.toString().padStart(2, '0')}
-            </div>
-            <div className="text-sm text-f1-gray-100/60 uppercase tracking-wider">
-              Minutes
-            </div>
-          </div>
-
-          {/* Secondes */}
-          <div className="bg-f1-gray-800 rounded-2xl p-6 border border-f1-gray-600">
-            <div className="text-4xl lg:text-5xl font-bold text-f1-red-400 mb-2">
-              {timeLeft.seconds.toString().padStart(2, '0')}
-            </div>
-            <div className="text-sm text-f1-gray-100/60 uppercase tracking-wider">
-              Secondes
-            </div>
-          </div>
-        </div>
+        <Countdown 
+          targetDate={race.started_at}
+          size="lg"
+          className="max-w-2xl mx-auto"
+          onExpired={() => {
+            console.log('La course a commencé !');
+          }}
+        />
       </div>
     </div>
   )
