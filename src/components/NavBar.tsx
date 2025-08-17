@@ -50,7 +50,7 @@ export default function NavBar() {
                   <Link href="/comparateur" className="nav-link-hover text-f1-gray-100 px-3 py-2 rounded-md text-sm font-medium">
                     Comparateur
                   </Link>
-                  <Link href="/jeux" className="nav-link-hover text-f1-gray-100 px-3 py-2 rounded-md text-sm font-medium">
+                  <Link href="/game" className="nav-link-hover text-f1-gray-100 px-3 py-2 rounded-md text-sm font-medium">
                     Jeux
                   </Link>
                   <Link href="/communaute" className="nav-link-hover text-f1-gray-100 px-3 py-2 rounded-md text-sm font-medium">
