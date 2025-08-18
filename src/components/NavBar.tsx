@@ -12,8 +12,7 @@ export default function NavBar() {
 
   const handleLogout = () => {
     logout();
-    setIsMenuOpen(false); // Fermer le menu mobile
-    // Optionnel : redirection vers la page d'accueil après déconnexion
+    setIsMenuOpen(false);
     window.location.href = '/';
   };
 
@@ -23,7 +22,6 @@ export default function NavBar() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-2">
           
-          {/* Logo à gauche */}
           <div className="flex-shrink-0">
             <Link href="/" className="flex items-center">
                 <Image 
@@ -36,7 +34,6 @@ export default function NavBar() {
             </Link>
           </div>
 
-          {/* Navigation au milieu - Affiché seulement si connecté */}
           {isAuthenticated && (
             <div className="hidden md:block">
               <div className="ml-10 bg-f1-gray-600 rounded-lg px-2 py-2 border border-f1-gray-500">
@@ -53,7 +50,7 @@ export default function NavBar() {
                   <Link href="/game" className="nav-link-hover text-f1-gray-100 px-3 py-2 rounded-md text-sm font-medium">
                     Jeux
                   </Link>
-                  <Link href="/communaute" className="nav-link-hover text-f1-gray-100 px-3 py-2 rounded-md text-sm font-medium">
+                  <Link href="/community" className="nav-link-hover text-f1-gray-100 px-3 py-2 rounded-md text-sm font-medium">
                     Communauté
                   </Link>
                 </div>
@@ -61,11 +58,9 @@ export default function NavBar() {
             </div>
           )}
 
-          {/* Boutons à droite - Conditionnels selon l'état de connexion */}
           <div className="hidden md:block">
             <div className="ml-4 flex items-center space-x-3">
               {isAuthenticated ? (
-                // Bouton de déconnexion si connecté
                 <button
                   onClick={handleLogout}
                   className="rejoindre-hover bg-f1-red-600 text-white px-4 py-2 rounded-md text-sm font-medium transition-all duration-300 hover:bg-f1-red-700 active:bg-f1-red-800"
@@ -73,7 +68,6 @@ export default function NavBar() {
                   Déconnexion
                 </button>
               ) : (
-                // Boutons de connexion/inscription si non connecté
                 <>
                   <Link href="/connexion" className="connexion-hover text-f1-gray-100 px-2 py-2 rounded-md text-sm font-medium">
                     Connexion
@@ -86,7 +80,6 @@ export default function NavBar() {
             </div>
           </div>
 
-          {/* Menu hamburger pour mobile */}
           <div className="md:hidden">
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -104,7 +97,6 @@ export default function NavBar() {
           </div>
         </div>
 
-        {/* Menu mobile */}
         {isMenuOpen && (
           <div className="md:hidden">
             <div className="px-2 pt-2 pb-3 space-y-1 bg-f1-gray-700 border-t border-f1-gray-600">
@@ -139,7 +131,7 @@ export default function NavBar() {
                     Jeux
                   </Link>
                   <Link 
-                    href="/communaute" 
+                    href="/community" 
                     className="block text-f1-gray-100 px-3 py-2 rounded-md text-base font-medium hover:bg-f1-gray-600"
                     onClick={() => setIsMenuOpen(false)}
                   >
@@ -148,7 +140,6 @@ export default function NavBar() {
                 </>
               )}
               
-              {/* Boutons d'authentification mobile */}
               <div className="pt-4 pb-3 border-t border-f1-gray-600">
                 {isAuthenticated ? (
                   <button

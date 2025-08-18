@@ -148,7 +148,7 @@ export default function Game() {
               </div>
             </div>
 
-            {/* Feu 3 (centre) */}
+            {/* Feu 3*/}
             <div className="bg-f1-gray-700 rounded-2xl p-8 border-2 border-f1-gray-600 shadow-2xl">
               <div className="flex flex-col gap-6">
                 <div className="w-20 h-20 rounded-full border-2 border-f1-gray-400 shadow-inner bg-white/20"></div>
@@ -181,13 +181,11 @@ export default function Game() {
           
           </div>
 
-        {/* Chronos */}
         <div className="text-center">
           <div className="text-8xl font-mono font-bold text-f1-gray-100 mb-4">
             {elapsedTime}s
           </div>
           
-          {/* Messages d'état */}
           {gameState === 'waiting' && (
             <p className="text-xl text-f1-gray-400">
               Cliquez pour commencer
