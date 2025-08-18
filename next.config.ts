@@ -20,6 +20,12 @@ const nextConfig: NextConfig = {
         hostname: 'cdn.pixabay.com',
         port: '',
         pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'awm.portfolio-etudiant-rouen.com',
+        port: '',
+        pathname: '/**',
       }
     ],
   },

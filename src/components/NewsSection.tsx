@@ -2,8 +2,9 @@
 
 import { useState } from 'react'
 import Image from 'next/image'
+import { useNews } from '../hooks/useNews'
 
-// Interface correspondant au modèle API Mongoose
+// Interface correspondant au modèle API
 interface INews {
   _id: string
   title: string
@@ -11,19 +12,19 @@ interface INews {
   image_url?: string
   link?: string
   author?: string
-  published_at?: Date
+  published_at?: string
   is_active: boolean
 }
 
 // Fonction utilitaire pour formater la date
-const formatDate = (date: Date | undefined) => {
-  if (!date) return 'Date inconnue'
+const formatDate = (dateString: string | undefined) => {
+  if (!dateString) return 'Date inconnue'
   
   return new Intl.DateTimeFormat('fr-FR', {
     day: 'numeric',
     month: 'long',
     year: 'numeric'
-  }).format(new Date(date))
+  }).format(new Date(dateString))
 }
 
 // Fonction utilitaire pour extraire une catégorie depuis le contenu
@@ -35,49 +36,76 @@ const extractCategory = (content: string): string => {
   return 'Actualités'
 }
 
-// Données d'exemple respectant le modèle API
-const newsData: INews[] = [
-  {
-    _id: "507f1f77bcf86cd799439011",
-    title: "Max Verstappen remporte son 4ème titre mondial consécutif",
-    content: "Le pilote néerlandais de Red Bull Racing décroche son quatrième championnat du monde consécutif lors du Grand Prix de Las Vegas, confirmant sa domination sur la Formule 1. Cette victoire marque une nouvelle ère dans l'histoire de la F1.",
-    image_url: "https://media.api-sports.io/formula-1/circuits/6.png",
-    link: "https://www.formula1.com/en/latest/article.max-verstappen-wins-fourth-title",
-    author: "Équipe F1 Fan Zone",
-    published_at: new Date('2024-11-25'),
-    is_active: true
-  },
-  {
-    _id: "507f1f77bcf86cd799439012",
-    title: "Ferrari annonce ses pilotes pour la saison 2025",
-    content: "La Scuderia Ferrari officialise la composition de son duo de pilotes pour la prochaine saison avec Charles Leclerc et Lewis Hamilton, créant l'une des paires les plus attendues de l'histoire de la F1.",
-    image_url: "https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-    link: "https://www.ferrari.com/en/formula1/articles/drivers-2025-announcement",
-    author: "Rédaction F1",
-    published_at: new Date('2024-11-20'),
-    is_active: true
-  },
-  {
-    _id: "507f1f77bcf86cd799439013",
-    title: "Nouveau circuit urbain confirmé pour 2025",
-    content: "La FIA confirme l'ajout d'un nouveau Grand Prix urbain au calendrier 2025, promettant des courses spectaculaires dans un cadre urbain moderne avec des défis techniques uniques pour les pilotes et les équipes.",
-    image_url: "https://images.unsplash.com/photo-1551698618-1dfe5d97d256?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-    link: "https://www.fia.com/news/new-urban-circuit-2025-calendar",
-    author: "FIA Communications",
-    published_at: new Date('2024-11-18'),
-    is_active: true
-  }
-]
-
-
-
 export default function NewsSection() {
   const [hoveredCard, setHoveredCard] = useState<string | null>(null)
+  const { news, isLoading, error } = useNews()
 
   const handleNewsClick = (link?: string) => {
     if (link) {
       window.open(link, '_blank', 'noopener,noreferrer')
     }
+  }
+
+  // Affichage du loading
+  if (isLoading) {
+    return (
+      <div className="max-w-7xl mx-auto">
+        <div className="text-center mb-16">
+          <h2 className="text-4xl lg:text-5xl font-bold text-f1-gray-100 mb-4">
+            Dernières Actualités F1
+          </h2>
+          <div className="w-24 h-1 bg-f1-red-600 mx-auto rounded-full mb-6"></div>
+        </div>
+        
+        <div className="flex justify-center items-center py-20">
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-red-600 mx-auto mb-4"></div>
+            <p className="text-white">Chargement des actualités...</p>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  // Affichage d'erreur
+  if (error) {
+    return (
+      <div className="max-w-7xl mx-auto">
+        <div className="text-center mb-16">
+          <h2 className="text-4xl lg:text-5xl font-bold text-f1-gray-100 mb-4">
+            Dernières Actualités F1
+          </h2>
+          <div className="w-24 h-1 bg-f1-red-600 mx-auto rounded-full mb-6"></div>
+        </div>
+        
+        <div className="text-center py-20">
+          <p className="text-red-500 mb-4">Erreur: {error}</p>
+          <p className="text-gray-400">
+            Impossible de charger les actualités pour le moment.
+          </p>
+        </div>
+      </div>
+    )
+  }
+
+  // Aucune actualité disponible
+  if (!news || news.length === 0) {
+    return (
+      <div className="max-w-7xl mx-auto">
+        <div className="text-center mb-16">
+          <h2 className="text-4xl lg:text-5xl font-bold text-f1-gray-100 mb-4">
+            Dernières Actualités F1
+          </h2>
+          <div className="w-24 h-1 bg-f1-red-600 mx-auto rounded-full mb-6"></div>
+        </div>
+        
+        <div className="text-center py-20">
+          <p className="text-gray-400 text-lg">
+            Aucune actualité disponible pour le moment.
+          </p>
+        </div>
+      </div>
+    )
   }
 
   return (
@@ -95,7 +123,7 @@ export default function NewsSection() {
 
       {/* Grille des news */}
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {newsData.filter(article => article.is_active).map((article) => (
+        {news.map((article) => (
           <article
             key={article._id}
             className={`bg-f1-gray-800 rounded-2xl overflow-hidden border border-f1-gray-600 cursor-pointer transform transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:shadow-f1-red-600/20 ${
