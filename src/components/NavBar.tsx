@@ -61,12 +61,18 @@ export default function NavBar() {
           <div className="hidden md:block">
             <div className="ml-4 flex items-center space-x-3">
               {isAuthenticated ? (
-                <button
-                  onClick={handleLogout}
-                  className="rejoindre-hover bg-f1-red-600 text-white px-4 py-2 rounded-md text-sm font-medium transition-all duration-300 hover:bg-f1-red-700 active:bg-f1-red-800"
+                <Link
+                  href="/profile"
+                  className="w-10 h-10 bg-black rounded-full flex items-center justify-center hover:bg-gray-800 transition-colors duration-300"
                 >
-                  Déconnexion
-                </button>
+                  <svg 
+                    className="w-6 h-6 text-white" 
+                    fill="currentColor" 
+                    viewBox="0 0 20 20"
+                  >
+                    <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
+                  </svg>
+                </Link>
               ) : (
                 <>
                   <Link href="/connexion" className="connexion-hover text-f1-gray-100 px-2 py-2 rounded-md text-sm font-medium">
@@ -142,12 +148,13 @@ export default function NavBar() {
               
               <div className="pt-4 pb-3 border-t border-f1-gray-600">
                 {isAuthenticated ? (
-                  <button
-                    onClick={handleLogout}
-                    className="block w-full text-left bg-f1-red-600 text-white px-3 py-2 rounded-md text-base font-medium hover:bg-f1-red-700"
+                  <Link 
+                    href="/profile" 
+                    className="block text-f1-gray-100 px-3 py-2 rounded-md text-base font-medium hover:bg-f1-gray-600"
+                    onClick={() => setIsMenuOpen(false)}
                   >
-                    Déconnexion
-                  </button>
+                    Profil
+                  </Link>
                 ) : (
                   <div className="space-y-2">
                     <Link 
