@@ -4,6 +4,8 @@ import { useState, useEffect } from 'react'
 import NavBar from '@/src/components/NavBar'
 import Footer from '@/src/components/Footer'
 import { BubbleBackground } from '@/src/components/animate-ui/backgrounds/bubble'
+import { useGameScore } from '@/src/hooks/useGameScore'
+import { useAuth } from '@/src/hooks/useAuth'
 
 export default function Game() {
   const [gameState, setGameState] = useState<'waiting' | 'countdown' | 'go' | 'running' | 'result'>('waiting')
@@ -13,6 +15,10 @@ export default function Game() {
   const [finalTime, setFinalTime] = useState<string>('0.00')
   const [tooEarly, setTooEarly] = useState(false)
   const [timeoutIds, setTimeoutIds] = useState<NodeJS.Timeout[]>([])
+  const [scoreSubmitted, setScoreSubmitted] = useState(false)
+
+  const { bestScore, submitScore, isLoading: scoreLoading } = useGameScore()
+  const { isAuthenticated } = useAuth()
 
   // Timer pour le chronos
   useEffect(() => {
@@ -57,7 +63,7 @@ export default function Game() {
     setTimeoutIds([])
   }
 
-  const handleClick = () => {
+  const handleClick = async () => {
     if (gameState === 'waiting') {
       startGame()
     } else if (gameState === 'countdown') {
@@ -69,6 +75,17 @@ export default function Game() {
       const final = ((currentTime - startTime) / 1000).toFixed(2)
       setFinalTime(final)
       setGameState('result')
+      
+      // Envoyer le score à l'API si l'utilisateur est connecté
+      if (isAuthenticated && !scoreSubmitted) {
+        setScoreSubmitted(true)
+        
+        const scoreData = {
+          score_ms: Math.round((currentTime - startTime)),
+        }
+        
+        await submitScore(scoreData)
+      }
     } else if (gameState === 'result') {
       // Reset pour recommencer
       setGameState('waiting')
@@ -76,6 +93,7 @@ export default function Game() {
       setTooEarly(false)
       setCurrentTime(0)
       setFinalTime('0.00')
+      setScoreSubmitted(false)
     }
   }
 
@@ -209,6 +227,21 @@ export default function Game() {
           )}
         </div>
       </main>
+      {isAuthenticated && bestScore && (
+        <div className="relative z-10 pb-4">
+          <div className="text-center">
+            <div className="inline-flex items-center space-x-3 bg-f1-gray-800/80 border border-yellow-500/50 rounded-xl px-6 py-3 backdrop-blur-sm">
+              <span className="text-2xl">👑</span>
+              <div className="text-left">
+                <p className="text-sm text-yellow-400 font-semibold">Meilleur Score</p>
+                <p className="text-lg text-yellow-300 font-bold">
+                  {(bestScore.score_ms / 1000).toFixed(3)}s
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
       
       <Footer />
     </div>
