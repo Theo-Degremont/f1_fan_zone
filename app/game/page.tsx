@@ -230,13 +230,10 @@ export default function Game() {
       {isAuthenticated && bestScore && (
         <div className="relative z-10 pb-4">
           <div className="text-center">
-            <div className="inline-flex items-center space-x-3 bg-f1-gray-800/80 border border-yellow-500/50 rounded-xl px-6 py-3 backdrop-blur-sm">
+            <div className="inline-flex items-center space-x-3 bg-f1-gray-800/80 border border-red-600 rounded-xl px-6 py-3 backdrop-blur-sm">
               <span className="text-2xl">👑</span>
-              <div className="text-left">
-                <p className="text-sm text-yellow-400 font-semibold">Meilleur Score</p>
-                <p className="text-lg text-yellow-300 font-bold">
-                  {(bestScore.score_ms / 1000).toFixed(3)}s
-                </p>
+              <div className="text-left ">
+                <p className="text-sm font-semibold">Meilleur Score {(bestScore.score_ms / 1000).toFixed(3)}s</p>
               </div>
             </div>
           </div>
