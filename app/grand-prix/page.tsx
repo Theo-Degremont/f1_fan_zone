@@ -16,7 +16,7 @@ export default function GrandPrixPage() {
 
   useEffect(() => {
     loadGrandPrixBySeason(selectedYear)
-  }, [selectedYear, loadGrandPrixBySeason])
+  }, [selectedYear])
 
   return (
     <ProtectedRoute>

@@ -235,10 +235,7 @@ export default function ClassementPage() {
                               classement.position === 3 ? 'bg-orange-400/20 text-orange-400 border border-orange-400/30' :
                               'bg-f1-gray-700/20 text-f1-gray-100 border border-f1-gray-600/30'
                             }`}>
-                              {classement.position === 1 ? '🥇' :
-                               classement.position === 2 ? '🥈' :
-                               classement.position === 3 ? '🥉' :
-                               classement.position}
+                              {classement.position }
                             </div>
                           </div>
                         </td>

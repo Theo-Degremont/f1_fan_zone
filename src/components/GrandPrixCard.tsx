@@ -1,4 +1,5 @@
 import React from 'react';
+import { useRouter } from 'next/navigation';
 import type { GrandPrix } from '../hooks/useGrandPrix';
 
 interface GrandPrixCardProps {
@@ -7,6 +8,8 @@ interface GrandPrixCardProps {
 }
 
 export function GrandPrixCard({ grandPrix }: GrandPrixCardProps) {
+  const router = useRouter();
+  
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
     return date.toLocaleDateString('fr-FR', {
@@ -27,12 +30,23 @@ export function GrandPrixCard({ grandPrix }: GrandPrixCardProps) {
     return timeDifference > fiveHoursInMs;
   };
 
+  const handleCardClick = () => {
+    // Naviguer vers la page SingleRace avec l'ID de la course
+    router.push(`/single-race/${grandPrix.id}`);
+  };
+
   return (
-    <div className="backdrop-blur-md bg-black/20 rounded-2xl shadow-2xl border border-white/10 p-6 hover:bg-black/30 transition-all duration-300 hover:transform hover:scale-105 relative group cursor-pointer">
+    <div 
+      className="backdrop-blur-md bg-black/20 rounded-2xl shadow-2xl border border-white/10 p-6 hover:bg-black/30 transition-all duration-300 hover:transform hover:scale-105 relative group cursor-pointer"
+      onClick={handleCardClick}
+    >
       <div className="absolute inset-0 bg-black/60 rounded-2xl opacity-0 group-hover:opacity-80 transition-opacity duration-300 flex items-center justify-center z-10">
         <div className="text-center">
           <div className="text-white text-lg font-bold mb-2">
-            Voir en détails
+            {isRaceFinished() ? 'Voir les résultats' : 'Voir les détails'}
+          </div>
+          <div className="text-white/70 text-sm">
+            Cliquez pour accéder à la course
           </div>
         </div>
       </div>
