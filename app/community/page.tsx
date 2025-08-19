@@ -64,12 +64,9 @@ export default function CommunityPage() {
     
     if (success) {
       setShowResults(true);
-      console.log('Vote enregistré avec succès pour la réponse:', answerId);
     } else {
-      console.warn('⚠️ Impossible d\'enregistrer le vote - La route n\'est probablement pas encore implémentée');
       
       setShowResults(true);
-      console.log('🧪 Mode test : Affichage des résultats simulés pour la réponse:', answerId);
     }
   };
 
@@ -118,7 +115,7 @@ export default function CommunityPage() {
         <NavBar />
         <div className="flex flex-col items-center justify-center min-h-[100vh]">
           <div className="text-center max-w-md">
-            <h1 className="text-4xl font-bold text-white mb-4">Question du jour</h1>
+            <h1 className="text-4xl font-formula1 font-bold text-white mb-4">Question du jour</h1>
             <div className="w-full h-px bg-gradient-to-r from-transparent via-red-500 to-transparent mb-6"></div>
             <div className="bg-red-900/30 border border-red-500/50 rounded-xl p-6">
               <p className="text-red-300 text-lg mb-2">😔 Oops !</p>
@@ -158,7 +155,7 @@ export default function CommunityPage() {
       
       <div className="flex flex-col items-center justify-center min-h-[100vh]">
         <div className="max-w-2xl mx-auto">
-          <h1 className="text-4xl font-bold text-center text-white mb-8">
+          <h1 className="text-4xl font-formula1 font-bold text-center text-white mb-8">
             Question du jour
           </h1>
           
@@ -218,7 +215,7 @@ export default function CommunityPage() {
             <div className="text-center mt-8">
               <div className="p-6">
                 <p className="text-gray-300 text-lg">
-                  {hasVoted ? '🗳️ Vous avez déjà voté !' : '🏁 Merci pour votre participation !'}
+                  {hasVoted ? 'Vous avez déjà voté !' : 'Merci pour votre participation !'}
                 </p>
                 <p className="text-gray-400 mt-2">
                   {stats?.totalVotes || 0} votes au total

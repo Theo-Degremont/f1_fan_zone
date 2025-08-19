@@ -4,7 +4,6 @@ import { useState } from 'react'
 import Image from 'next/image'
 import { useNews } from '../hooks/useNews'
 
-// Interface correspondant au modèle API
 interface INews {
   _id: string
   title: string
@@ -16,7 +15,7 @@ interface INews {
   is_active: boolean
 }
 
-// Fonction utilitaire pour formater la date
+
 const formatDate = (dateString: string | undefined) => {
   if (!dateString) return 'Date inconnue'
   
@@ -27,7 +26,6 @@ const formatDate = (dateString: string | undefined) => {
   }).format(new Date(dateString))
 }
 
-// Fonction utilitaire pour extraire une catégorie depuis le contenu
 const extractCategory = (content: string): string => {
   if (content.toLowerCase().includes('championnat') || content.toLowerCase().includes('titre')) return 'Championnat'
   if (content.toLowerCase().includes('transfert') || content.toLowerCase().includes('pilote')) return 'Transferts'
@@ -46,7 +44,6 @@ export default function NewsSection() {
     }
   }
 
-  // Affichage du loading
   if (isLoading) {
     return (
       <div className="max-w-7xl mx-auto">
@@ -67,7 +64,6 @@ export default function NewsSection() {
     )
   }
 
-  // Affichage d'erreur
   if (error) {
     return (
       <div className="max-w-7xl mx-auto">
@@ -88,7 +84,6 @@ export default function NewsSection() {
     )
   }
 
-  // Aucune actualité disponible
   if (!news || news.length === 0) {
     return (
       <div className="max-w-7xl mx-auto">
@@ -110,9 +105,8 @@ export default function NewsSection() {
 
   return (
     <div className="max-w-7xl mx-auto">
-      {/* Titre de la section */}
       <div className="text-center mb-16">
-        <h2 className="text-4xl lg:text-5xl font-bold text-f1-gray-100 mb-4">
+        <h2 className="text-3xl font-formula1 lg:text-4xl font-bold text-f1-gray-100 mb-4">
           Dernières Actualités F1
         </h2>
         <div className="w-24 h-1 bg-f1-red-600 mx-auto rounded-full mb-6"></div>
@@ -121,7 +115,6 @@ export default function NewsSection() {
         </p>
       </div>
 
-      {/* Grille des news */}
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
         {news.map((article) => (
           <article
@@ -133,7 +126,6 @@ export default function NewsSection() {
             onMouseLeave={() => setHoveredCard(null)}
             onClick={() => handleNewsClick(article.link)}
           >
-            {/* Image de l'article */}
             <div className="relative h-48 overflow-hidden">
               {article.image_url ? (
                 <Image
@@ -149,13 +141,9 @@ export default function NewsSection() {
                 </div>
               )}
 
-              {/* Overlay gradient */}
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
             </div>
-
-            {/* Contenu de l'article */}
             <div className="p-6">
-              {/* Date de publication et auteur */}
               <div className="flex items-center justify-between text-f1-gray-100/60 text-sm mb-3">
                 <div className="flex items-center">
                   <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
@@ -170,20 +158,17 @@ export default function NewsSection() {
                 )}
               </div>
 
-              {/* Titre */}
               <h3 className="text-xl font-bold text-f1-gray-100 mb-3 line-clamp-2 leading-tight">
                 {article.title}
               </h3>
 
-              {/* Contenu (description) */}
-              <p className="text-f1-gray-100/80 text-sm leading-relaxed line-clamp-3 mb-4">
+              <p className="text-f1-gray-100/80 font-titillium text-m leading-relaxed line-clamp-3 mb-4">
                 {article.content.length > 150 
                   ? article.content.substring(0, 150) + '...' 
                   : article.content
                 }
               </p>
 
-              {/* Lien "Lire plus" */}
               {article.link && (
                 <div className="flex items-center text-f1-red-400 text-sm font-semibold group">
                   <span className="group-hover:text-f1-red-300 transition-colors">
@@ -201,7 +186,6 @@ export default function NewsSection() {
               )}
             </div>
 
-            {/* Indicateur de hover */}
             <div className={`h-1 bg-gradient-to-r from-f1-red-600 to-f1-red-400 transform transition-all duration-300 ${
               hoveredCard === article._id ? 'scale-x-100' : 'scale-x-0'
             }`}></div>

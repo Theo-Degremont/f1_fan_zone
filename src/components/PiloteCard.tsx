@@ -43,7 +43,7 @@ export default function PiloteCard({ driver, isSelected = false, onClick }: Driv
                     style={{ backgroundColor: driver.current_team?.color || '#555555' }}
                   >
                     <div className="text-center">
-                      <div className="font-medium text-base leading-tight">
+                      <div className="font-medium font-formula1 text-base leading-tight">
                         {driver.name} {driver.surname}
                       </div>
                     </div>

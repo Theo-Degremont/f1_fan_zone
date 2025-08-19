@@ -19,6 +19,18 @@
   --f1-gray-50: #FFFFFF;
 }
 
+.font-formula1 {
+  font-family: var(--font-formula1);
+}
+
+.font-space-grotesk {
+  font-family: var(--font-space-grotesk);
+}
+
+.font-titillium {
+  font-family: var(--font-titillium);
+}
+
 /* Classes CSS de fallback */
 .bg-f1-gray-700 {
   background-color: var(--f1-gray-700) !important;

@@ -8,7 +8,6 @@ import { FaFacebookF, FaInstagram, FaTiktok} from "react-icons/fa";
 
 
 export default function Footer() {
-  // Fonction pour scroll vers le haut
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
@@ -18,17 +17,15 @@ export default function Footer() {
 
   return (
     <footer className="bg-f1-gray-700 relative">
-      {/* Première partie */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           
-          {/* Côté gauche - À propos */}
           <div className="space-y-8">
             <div>
               <h3 className="text-3xl lg:text-4xl font-bold text-f1-gray-100 mb-6">
                 À propos de nous
               </h3>
-              <p className="text-f1-gray-100/80 leading-relaxed text-lg space-y-4">
+              <p className="text-f1-gray-100/80 font-titillium leading-relaxed text-lg space-y-4">
                 <span className="block">
                   F1 Fan Zone est la destination ultime pour tous les passionnés de Formule 1 en France. 
                   Nous vous offrons une expérience immersive et complète du monde de la F1.
@@ -48,13 +45,11 @@ export default function Footer() {
               </p>
             </div>
 
-            {/* Réseaux sociaux */}
             <div>
               <h4 className="text-xl font-semibold text-f1-gray-100 mb-4">
                 Suivez-nous
               </h4>
               <div className="flex space-x-6">
-                {/* Facebook */}
                 <Link 
                   href="" 
                   target="_blank"
@@ -63,7 +58,6 @@ export default function Footer() {
                   <FaFacebookF className='w-6 h-6' />
                 </Link>
 
-                {/* Instagram */}
                 <Link 
                   href="" 
                   target="_blank"
@@ -72,7 +66,6 @@ export default function Footer() {
                   <FaInstagram className='w-6 h-6' />
                 </Link>
 
-                {/* TikTok */}
                 <Link 
                   href="" 
                   target="_blank"
@@ -84,7 +77,6 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Côté droit - Logo */}
           <div className="flex justify-center lg:justify-end items-start">
             <div className="relative">
               <Image 
@@ -94,16 +86,13 @@ export default function Footer() {
                 height={300} 
                 className="footer-logo-hover"
               />
-              {/* Effet de glow autour du logo */}
               <div className="footer-logo-glow"></div>
             </div>
           </div>
         </div>
       </div>
-      {/* Deuxième partie */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         
-        {/* Liens légaux */}
         <div className="flex flex-wrap justify-center gap-6 mb-8">
           <Link href="/mentions-legales" className="legal-link-hover text-sm">
             Mentions légales
@@ -138,10 +127,8 @@ export default function Footer() {
           </Link>
         </div>
 
-        {/* Partie inférieure */}
         <div className="flex flex-col md:flex-row justify-between items-center pt-8 border-t border-f1-gray-600">
           
-          {/* Bouton scroll to top */}
           <button 
             onClick={scrollToTop}
             className="scroll-to-top-hover text-white p-3 rounded-full mb-4 md:mb-0"
@@ -152,13 +139,12 @@ export default function Footer() {
             </svg>
           </button>
 
-          {/* Copyright et informations */}
-          <div className="text-center md:text-right text-f1-gray-100/60 text-sm space-y-1">
+          <div className="text-center font-titillium md:text-right text-f1-gray-100/60 text-sm space-y-1">
             <p>© 2025 F1 Fan Zone. Tous droits réservés.</p>
-            <p className="text-xs">
+            <p className="font-titillium text-xs">
               Site non officiel de la Formula 1. Marques et logos sont la propriété de leurs détenteurs respectifs.
             </p>
-            <p className="text-xs">
+            <p className="font-titillium text-xs">
               Développé avec ❤️ pour la communauté F1 française
             </p>
           </div>

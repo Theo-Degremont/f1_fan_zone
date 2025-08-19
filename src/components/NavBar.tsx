@@ -38,19 +38,19 @@ export default function NavBar() {
             <div className="hidden md:block">
               <div className="ml-10 bg-f1-gray-600 rounded-lg px-2 py-2 border border-f1-gray-500">
                 <div className="flex items-baseline space-x-2">
-                  <Link href="/grand-prix" className="nav-link-hover text-f1-gray-100 px-3 py-2 rounded-md text-sm font-medium">
+                  <Link href="/grand-prix" className="nav-link-hover font-formula1 text-f1-gray-100 px-3 py-2 rounded-md text-sm font-medium">
                     Grand prix
                   </Link>
-                  <Link href="/classement" className="nav-link-hover text-f1-gray-100 px-3 py-2 rounded-md text-sm font-medium">
+                  <Link href="/classement" className="nav-link-hover font-formula1 text-f1-gray-100 px-3 py-2 rounded-md text-sm font-medium">
                     Classement
                   </Link>
-                  <Link href="/comparateur" className="nav-link-hover text-f1-gray-100 px-3 py-2 rounded-md text-sm font-medium">
+                  <Link href="/comparateur" className="nav-link-hover font-formula1 text-f1-gray-100 px-3 py-2 rounded-md text-sm font-medium">
                     Comparateur
                   </Link>
-                  <Link href="/game" className="nav-link-hover text-f1-gray-100 px-3 py-2 rounded-md text-sm font-medium">
+                  <Link href="/game" className="nav-link-hover font-formula1 text-f1-gray-100 px-3 py-2 rounded-md text-sm font-medium">
                     Jeux
                   </Link>
-                  <Link href="/community" className="nav-link-hover text-f1-gray-100 px-3 py-2 rounded-md text-sm font-medium">
+                  <Link href="/community" className="nav-link-hover font-formula1 text-f1-gray-100 px-3 py-2 rounded-md text-sm font-medium">
                     Communauté
                   </Link>
                 </div>

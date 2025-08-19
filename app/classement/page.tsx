@@ -13,16 +13,13 @@ export default function ClassementPage() {
   const [selectedYear, setSelectedYear] = useState<number>(2025);
   const [activeTab, setActiveTab] = useState<'pilote' | 'team'>('pilote');
   
-  // États pour le classement des équipes
   const [classementsTeam, setClassementsTeam] = useState<ClassementTeam[]>([]);
   const [isLoadingTeam, setIsLoadingTeam] = useState(false);
   const [errorTeam, setErrorTeam] = useState<string | null>(null);
   const [totalTeams, setTotalTeams] = useState(0);
 
-  // Années disponibles pour le filtre
   const availableYears = [2025, 2024, 2023, 2022, 2021, 2020];
 
-  // Fonction pour charger le classement des équipes
   const loadClassementTeamBySeason = async (year: number) => {
     try {
       setIsLoadingTeam(true);
@@ -43,7 +40,6 @@ export default function ClassementPage() {
     } catch (err) {
       console.error('Erreur lors du chargement du classement teams:', err);
       setErrorTeam(err instanceof Error ? err.message : 'Erreur inconnue');
-      // Fallback temporaire avec des données vides
       setClassementsTeam([]);
       setTotalTeams(0);
     } finally {
@@ -51,7 +47,6 @@ export default function ClassementPage() {
     }
   };
 
-  // Charger le classement au montage et quand l'année ou l'onglet change
   useEffect(() => {
     if (activeTab === 'pilote') {
       loadClassementBySeason(selectedYear);
@@ -75,12 +70,11 @@ export default function ClassementPage() {
               }}
               className="fixed inset-0 -z-10"
             />
-      <div className="min-h-screen relative pt-20">
+      <div className="min-h-screen relative pt-35">
         
         <main className="container mx-auto px-4 py-8">
-          {/* En-tête de la page */}
           <div className="text-center mb-12">
-            <h1 className="text-4xl md:text-6xl font-bold text-f1-gray-100 mb-4">
+            <h1 className="text-4xl font-formula1 md:text-5xl font-bold text-f1-gray-100 mb-4">
               Classement {activeTab === 'pilote' ? 'Pilotes' : 'Équipes'}
             </h1>
             <p className="text-xl text-f1-gray-100/70 max-w-2xl mx-auto">
@@ -89,7 +83,6 @@ export default function ClassementPage() {
             <div className="w-24 h-1 bg-f1-red-600 mx-auto mt-6 rounded-full"></div>
           </div>
 
-          {/* Onglets Pilote / Team */}
           <div className="flex justify-center mb-8">
             <div className="backdrop-blur-md bg-black/20 rounded-2xl shadow-2xl border border-white/10 p-2">
               <div className="flex gap-2">
@@ -121,7 +114,7 @@ export default function ClassementPage() {
           <div className="mb-8">
             <div className="backdrop-blur-md bg-black/20 rounded-2xl shadow-2xl border border-white/10 p-6">
               <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-                <h2 className="text-2xl font-semibold text-f1-gray-100">
+                <h2 className="text-2xl font-formula1 font-semibold text-f1-gray-100">
                   Saison {selectedYear}
                 </h2>
                 
@@ -131,7 +124,7 @@ export default function ClassementPage() {
                     <button
                       key={year}
                       onClick={() => setSelectedYear(year)}
-                      className={`px-4 py-2 rounded-lg font-medium transition-all duration-300 ${
+                      className={`px-4 py-2 rounded-lg font-formula1 font-medium transition-all duration-300 ${
                         selectedYear === year
                           ? 'bg-f1-red-600 text-white shadow-lg transform scale-105'
                           : 'bg-f1-gray-700 text-f1-gray-100 hover:bg-f1-gray-600 hover:text-white'
@@ -194,7 +187,7 @@ export default function ClassementPage() {
               <div className="overflow-x-auto">
                 <table className="w-full">
                   {/* En-tête du tableau */}
-                  <thead className="bg-f1-red-600/20 border-b border-f1-red-600/30">
+                  <thead className="bg-f1-red-600/20 font-formula1 border-b border-f1-red-600/30">
                     <tr>
                       <th className="px-6 py-4 text-left text-sm font-semibold text-f1-gray-100 uppercase tracking-wider">
                         Position

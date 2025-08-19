@@ -3,7 +3,7 @@
 import React from 'react'
 import NavBar from "../src/components/NavBar";
 import { BubbleBackground } from '../src/components/animate-ui/backgrounds/bubble';
-import F1HelmetViewer from '../src/components/3D/3DHelmet'; // Assuming this is the correct import for the 3D model viewer
+import F1HelmetViewer from '../src/components/3D/3DHelmet'; 
 import { RippleButton } from '../src/components/animate-ui/buttons/ripple';
 import TeamShowcase from '../src/components/TeamShowcase';
 import NextRace from '../src/components/NextRaceSection';
@@ -32,15 +32,15 @@ export default function Home() {
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="space-y-12 flex flex-col justify-center items-center text-center lg:text-left lg:items-start">
               <div className='space-y-2 justify-items-center'>
-                <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-f1-gray-100 leading-tight text-center">
+                <h1 className="text-5xl font-formula1 md:text-5xl lg:text-6xl font-bold leading-tight text-center">
                   Vivez la
-                  <span className="block text-f1-red-600">Formule 1</span>
+                  <span className="block font-formula1 text-f1-red-600">Formule 1</span>
                   comme jamais
                 </h1>
-                
-                <p className="text-xl md:text-2xl text-f1-gray-100/80 leading-relaxed max-w-2xl mt-8">
-                  Plongez dans l'adrénaline pure de la F1. Suivez vos pilotes favoris, 
-                  analysez chaque course et rejoignez la communauté la plus passionnée 
+
+                <p className="text-xl font-titillium md:text-3xl text-f1-gray-100/80 leading-relaxed max-w-2xl mt-8">
+                  Plongez dans l'adrénaline pure de la F1. Suivez vos pilotes favoris,
+                  analysez chaque course et rejoignez la communauté la plus passionnée
                   de France. L'émotion n'attend que vous.
                 </p>
                 
@@ -50,17 +50,17 @@ export default function Home() {
                 </div>
                 
                 <div className="flex space-x-8 pt-12">
-                  <div>
-                    <div className="text-2xl font-bold text-f1-red-400">24</div>
-                    <div className="text-sm text-f1-gray-100/60">Courses</div>
+                  <div className='flex flex-col items-center'>
+                    <div className="text-2xl font-formula1 font-bold text-f1-red-400">24</div>
+                    <div className="text-m text-f1-gray-100/60">Courses</div>
                   </div>
-                  <div>
-                    <div className="text-2xl font-bold text-f1-red-400">20</div>
-                    <div className="text-sm text-f1-gray-100/60">Pilotes</div>
+                  <div className='flex flex-col items-center'>
+                    <div className="text-2xl font-formula1 font-bold text-f1-red-400">20</div>
+                    <div className="text-m text-f1-gray-100/60">Pilotes</div>
                   </div>
-                  <div>
-                    <div className="text-2xl font-bold text-f1-red-400">50k+</div>
-                    <div className="text-sm text-f1-gray-100/60">Fans</div>
+                  <div className='flex flex-col items-center'>
+                    <div className="text-2xl font-formula1 font-bold text-f1-red-400">50k+</div>
+                    <div className="text-m text-f1-gray-100/60">Fans</div>
                   </div>
                 </div>
               </div>
@@ -79,19 +79,18 @@ export default function Home() {
         </div>
       </section>
       
-      {/* Section Prochaine Course */}
       <section className="bg-f1-gray-800 py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
           <NextRace />
         </div>
       </section>      
-      {/* Section News */}
+
       <section className="bg-f1-gray-900 py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
           <NewsSection />
         </div>
       </section>      
-      {/* Footer */}
+
       <Footer />
     </div>
   );

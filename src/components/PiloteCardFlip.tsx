@@ -50,7 +50,7 @@ export default function PiloteCardFlip({ driver, isSelected = false, onClick }: 
                 style={{ backgroundColor: driver.current_team?.color || '#555555' }}
               >
                 <div className="text-center">
-                  <div className="font-medium text-base leading-tight">
+                  <div className="font-medium font-formula1 text-base leading-tight">
                     {driver.name} {driver.surname}
                   </div>
                 </div>
@@ -63,7 +63,7 @@ export default function PiloteCardFlip({ driver, isSelected = false, onClick }: 
             
             <div className="text-center mb-4">
                 <div className='flex items-center justify-between'>
-                <h3 className="text-xl font-bold mb-2">
+                <h3 className="text-xl font-formula1 font-bold mb-2">
                     {driver.name} {driver.surname}
                 </h3>
                 <div className="flex items-center justify-center gap-2 mb-3">
@@ -80,7 +80,6 @@ export default function PiloteCardFlip({ driver, isSelected = false, onClick }: 
               )}
             </div>
 
-            {/* Statistiques */}
             <div className="space-y-1">
               <div className="grid grid-cols-2 gap-1">
                 <div className="text-center bg-f1-gray-700 rounded-lg p-3">
@@ -110,7 +109,6 @@ export default function PiloteCardFlip({ driver, isSelected = false, onClick }: 
               </div>
             </div>
 
-            {/* Indicateur de survol */}
             <div className="text-center mt-4">
               <div className="text-xs text-f1-gray-100/50">
                 Cliquez pour sélectionner

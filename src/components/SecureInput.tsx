@@ -42,21 +42,17 @@ export function SecureInput({
     message: null
   })
 
-  // Gérer les changements de valeur avec nettoyage
   const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     let newValue = e.target.value
     
-    // Nettoyer la valeur selon le type
     if (type === 'text' || type === 'email') {
       newValue = sanitizeInput(newValue)
     }
-    // Pour les mots de passe, on ne fait pas de nettoyage agressif
-    // car ils peuvent contenir des caractères spéciaux légitimes
+
     
     onChange(name, newValue)
   }, [name, onChange, type])
 
-  // Vérification de l'email avec debounce
   useEffect(() => {
     if (type === 'email' && showEmailValidation && onEmailCheck && value) {
       const emailValidation = validateEmail(value)
@@ -79,7 +75,7 @@ export function SecureInput({
               message: 'Erreur lors de la vérification'
             })
           }
-        }, 800) // Debounce de 800ms
+        }, 800) 
 
         return () => clearTimeout(timeoutId)
       } else {
@@ -90,26 +86,21 @@ export function SecureInput({
         })
       }
     } else if (type === 'email' && !value) {
-      // Reset quand le champ email est vide
       setEmailCheckStatus({
         isChecking: false,
         isAvailable: null,
         message: null
       })
     }
-  }, [value, type, showEmailValidation]) // Retirer onEmailCheck des dépendances
-
-  // Obtenir la force du mot de passe
+  }, [value, type, showEmailValidation]) 
   const passwordStrength = showPasswordStrength && type === 'password' && value 
     ? getPasswordStrength(value) 
     : null
 
-  // Styles de base
-  const baseStyles = "w-full px-4 py-3 rounded-lg bg-f1-gray-700 border text-white placeholder-f1-gray-400 focus:outline-none focus:ring-2 focus:ring-red-500/20 transition-all duration-300"
-  
-  // Styles conditionnels selon l'état
-  const conditionalStyles = error 
-    ? 'border-red-500 focus:border-red-500' 
+  const baseStyles = "w-full px-4 py-3 font-titillium rounded-lg bg-f1-gray-700 border text-white placeholder-f1-gray-400 focus:outline-none focus:ring-2 focus:ring-red-500/20 transition-all duration-300"
+
+  const conditionalStyles = error
+    ? 'border-red-500 focus:border-red-500'
     : 'border-gray-400 focus:border-red-500 hover:border-gray-300'
 
   const finalClassName = `${baseStyles} ${conditionalStyles} ${className}`
@@ -131,7 +122,6 @@ export function SecureInput({
           maxLength={type === 'password' ? 50 : type === 'email' ? 255 : 25}
         />
 
-        {/* Bouton pour montrer/cacher le mot de passe */}
         {type === 'password' && (
           <button
             type="button"
@@ -153,7 +143,6 @@ export function SecureInput({
           </button>
         )}
 
-        {/* Indicateur de vérification d'email */}
         {type === 'email' && showEmailValidation && (
           <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
             {emailCheckStatus.isChecking ? (
@@ -171,7 +160,6 @@ export function SecureInput({
         )}
       </div>
 
-      {/* Indicateur de force du mot de passe */}
       {passwordStrength && isFocused && (
         <div className="space-y-1">
           <div className="flex items-center justify-between">
@@ -193,7 +181,6 @@ export function SecureInput({
         </div>
       )}
 
-      {/* Statut de vérification de l'email */}
       {type === 'email' && showEmailValidation && emailCheckStatus.message && (
         <div className={`text-sm mt-1 flex items-center ${
           emailCheckStatus.isAvailable === true 
@@ -219,7 +206,6 @@ export function SecureInput({
         </div>
       )}
 
-      {/* Message d'erreur */}
       {error && (
         <p className="text-red-400 text-sm mt-1 flex items-center">
           <svg className="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">

@@ -7,7 +7,6 @@ import Countdown from './Countdown'
 export default function NextRace() {
   const { race, isLoading, error, refetch } = useNextRace()
 
-  // Fonction pour obtenir le drapeau du pays
   const getCountryFlag = (country: string) => {
     const flags: { [key: string]: string } = {
       'Monaco': '🇲🇨',
@@ -34,7 +33,6 @@ export default function NextRace() {
     return flags[country] || '🏁'
   }
 
-  // État de chargement (comme TeamShowcase)
   if (isLoading) {
     return (
       <div className="max-w-4xl mx-auto text-center">
@@ -57,7 +55,6 @@ export default function NextRace() {
     )
   }
 
-  // État d'erreur (comme TeamShowcase)
   if (error || !race) {
     return (
       <div className="max-w-4xl mx-auto text-center">
@@ -96,18 +93,15 @@ export default function NextRace() {
 
   return (
     <div className="max-w-4xl mx-auto text-center">
-      {/* Titre de la section */}
       <div className="mb-12">
-        <h2 className="text-4xl lg:text-5xl font-bold text-f1-gray-100 mb-4">
+        <h2 className="text-3xl font-formula1 lg:text-4xl font-bold text-f1-gray-100 mb-4">
           Prochaine Course
         </h2>
         <div className="w-24 h-1 bg-f1-red-600 mx-auto rounded-full"></div>
       </div>
 
-      {/* Contenu principal */}
       <div className="grid md:grid-cols-2 gap-12 items-center">
         
-        {/* Côté gauche - Image du circuit */}
         <div className="relative">
           <div className="w-full h-80 rounded-3xl shadow-2xl relative overflow-hidden">
             <Image
@@ -118,7 +112,6 @@ export default function NextRace() {
               className="object-contain"
               onError={(e) => {
                 console.log(`Erreur de chargement de l'image: ${race.image_url}`)
-                // Fallback vers un fond par défaut en cas d'erreur
                 const target = e.target as HTMLImageElement
                 target.style.display = 'none'
                 const parent = target.parentElement
@@ -137,27 +130,22 @@ export default function NextRace() {
               }}
             />
             
-            {/* Overlay sombre pour améliorer la lisibilité */}
             <div className="absolute inset-0 bg-black/20"></div>
             
-            {/* Effet de brillance */}
             <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/10 to-transparent"></div>
             
-            {/* Décorations */}
             <div className="absolute top-4 right-4 w-16 h-16 border-2 border-white/20 rounded-full"></div>
             <div className="absolute bottom-6 left-6 w-12 h-12 border-2 border-white/20 rounded-full"></div>
             <div className="absolute top-1/2 left-4 w-2 h-16 bg-white/10 rounded-full"></div>
           </div>
         </div>
 
-        {/* Côté droit - Informations de la course */}
         <div className="space-y-8 text-left">
           
-          {/* Nom du Grand Prix */}
           <div>
             <div className="flex items-center gap-3 mb-2">
               <span className="text-3xl">{getCountryFlag(race.country || '')}</span>
-              <h3 className="text-3xl lg:text-4xl font-bold text-f1-gray-100">
+              <h3 className="text-2xl font-formula1 lg:text-3xl font-bold text-f1-gray-100">
                 {race.race_name}
               </h3>
             </div>
@@ -166,17 +154,15 @@ export default function NextRace() {
             </div>
           </div>
 
-          {/* Lieu */}
           <div className="flex items-center space-x-3">
-            <div className="w-3 h-3 bg-f1-red-600 rounded-full"></div>
+            <div className="w-3 h-3 bg-f1-gray-600 rounded-full"></div>
             <span className="text-xl text-f1-gray-100/80">
               {race.city}, {race.country || 'Non spécifié'}
             </span>
           </div>
 
-          {/* Date de la course */}
           <div className="flex items-center space-x-3">
-            <div className="w-3 h-3 bg-f1-red-600 rounded-full"></div>
+            <div className="w-3 h-3 bg-f1-gray-600 rounded-full"></div>
             <span className="text-xl text-f1-gray-100/80">
               {new Date(race.started_at).toLocaleDateString('fr-FR', {
                 weekday: 'long',
@@ -190,11 +176,10 @@ export default function NextRace() {
             </span>
           </div>
 
-          {/* Informations supplémentaires */}
           <div className="grid grid-cols-2 gap-4 pt-4">
             <div className="flex items-center space-x-3">
-              <div className="w-3 h-3 bg-f1-red-600 rounded-full"></div>
-              <span className="text-sm text-f1-gray-100/60">
+              <div className="w-3 h-3 bg-f1-gray-600 rounded-full"></div>
+              <span className="text-xl text-f1-gray-100/80">
                 {race.nb_laps} tours
               </span>
             </div>
@@ -202,7 +187,6 @@ export default function NextRace() {
         </div>
       </div>
 
-      {/* Compte à rebours */}
       <div className="mt-16">
         <h4 className="text-2xl font-semibold text-f1-gray-100 mb-8">
           Temps restant avant le départ

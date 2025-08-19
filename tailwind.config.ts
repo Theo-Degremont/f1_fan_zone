@@ -29,7 +29,10 @@ const config: Config = {
         },
       },
       fontFamily: {
-        'f1': ['Racing Sans One', 'sans-serif'],
+        'formula1': ['var(--font-formula1)', 'sans-serif'],
+        'space-grotesk': ['var(--font-space-grotesk)', 'sans-serif'],
+        'titillium': ['var(--font-titillium)', 'sans-serif'],
+        'sans': ['var(--font-space-grotesk)', 'sans-serif'],
       },
     },
   },

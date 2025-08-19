@@ -51,7 +51,7 @@ export default function ComparateurPage() {
     } else if (!selectedDriver2) {
       setSelectedDriver2(driver)
     } else {
-      // Si les deux cases sont pleines, remplacer la première
+
       setSelectedDriver1(driver)
       setSelectedDriver2(null)
     }
@@ -68,12 +68,12 @@ export default function ComparateurPage() {
         <BubbleBackground 
           interactive={true}
           colors={{
-            first: '218,59,35',     // F1 Red
-            second: '56,56,56',     // F1 Gray
-            third: '242,242,242',   // F1 Light Gray
-            fourth: '199,23,0',     // F1 Dark Red
-            fifth: '131,15,0',      // F1 Very Dark Red
-            sixth: '255,112,93',    // F1 Light Red
+            first: '218,59,35',     
+            second: '56,56,56',     
+            third: '242,242,242',   
+            fourth: '199,23,0',     
+            fifth: '131,15,0',     
+            sixth: '255,112,93',    
           }}
         />
         <NavBar />
@@ -103,43 +103,39 @@ export default function ComparateurPage() {
             />
       <NavBar />
       
-      <div className="container mx-auto px-10 py-8 pt-24 relative z-10">
+      <div className="container mx-auto px-10 py-8 pt-40 relative z-10">
 
-        {/* Deux cases de sélection avec drapeau damier superposé */}
         <div className="relative flex items-center justify-center gap-30 mb-8 max-w-7xl mx-auto">
-          {/* Slot 1 - largeur réduite */}
           <div className="w-75">
             {selectedDriver1 ? (
               <PiloteCard 
                 driver={selectedDriver1}
                 isSelected={true}
-                onClick={() => handleRemoveDriver(1)} // Clic pour enlever le pilote
+                onClick={() => handleRemoveDriver(1)} 
               />
             ) : (
               <EmptySlot 
                 slotNumber={1}
-                onClick={() => {}} // Pas de clic direct, la sélection se fait via la liste
+                onClick={() => {}} 
               />
             )}
           </div>
 
-          {/* Slot 2 - largeur réduite */}
           <div className="w-75">
             {selectedDriver2 ? (
               <PiloteCard 
                 driver={selectedDriver2}
                 isSelected={true}
-                onClick={() => handleRemoveDriver(2)} // Clic pour enlever le pilote
+                onClick={() => handleRemoveDriver(2)} 
               />
             ) : (
               <EmptySlot 
                 slotNumber={2}
-                onClick={() => {}} // Pas de clic direct, la sélection se fait via la liste
+                onClick={() => {}} 
               />
             )}
           </div>
 
-          {/* Image du drapeau damier superposée au centre */}
           <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-10">
             <div>
               <Image
@@ -153,7 +149,6 @@ export default function ComparateurPage() {
           </div>
         </div>
 
-        {/* Bouton Comparer */}
         <div className="text-center mb-8">
           <button
             className={`px-8 py-4 text-white font-bold text-xl rounded-lg transition-all duration-300 ${
@@ -172,12 +167,10 @@ export default function ComparateurPage() {
           </button>
         </div>
 
-        {/* Ligne de séparation */}
         <hr className="border-f1-gray-100 mb-8 opacity-30" />
 
-        {/* Liste des pilotes */}
         <div className="mb-8">
-          <h2 className="text-2xl font-bold text-center mb-6 text-f1-gray-100">
+          <h2 className="text-2xl font-formula1 font-bold text-center mb-6 text-f1-gray-100">
             Sélectionnez vos pilotes
           </h2>
           

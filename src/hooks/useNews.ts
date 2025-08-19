@@ -6,7 +6,6 @@ export const useNews = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  // Récupérer les actualités
   const fetchNews = async () => {
     setIsLoading(true);
     setError(null);
@@ -15,10 +14,8 @@ export const useNews = () => {
       const response = await newsService.getNews();
       
       if (response.success && response.data) {
-        console.log('✅ Actualités récupérées avec succès:', response.data.length, 'articles');
         setNews(response.data);
       } else {
-        console.warn('⚠️ Erreur lors de la récupération des actualités:', response.message);
         setError(response.message || 'Erreur lors de la récupération des actualités');
       }
     } catch (err) {
@@ -29,7 +26,6 @@ export const useNews = () => {
     }
   };
 
-  // Charger les actualités au montage du composant
   useEffect(() => {
     fetchNews();
   }, []);

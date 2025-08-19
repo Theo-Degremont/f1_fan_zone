@@ -82,7 +82,6 @@ export default function ResultatComparaisonPage() {
     let score1 = 0
     let score2 = 0
 
-    // Calcul de l'efficacité (pourcentages basés sur le nombre de courses)
     const efficiency1 = {
       victoryRate: d1.nb_race > 0 ? (d1.nb_victory / d1.nb_race) * 100 : 0,
       podiumRate: d1.nb_race > 0 ? (d1.nb_podiums / d1.nb_race) * 100 : 0,
@@ -98,7 +97,6 @@ export default function ResultatComparaisonPage() {
     const avgEfficiency1 = (efficiency1.victoryRate + efficiency1.podiumRate + efficiency1.poleRate) / 3
     const avgEfficiency2 = (efficiency2.victoryRate + efficiency2.podiumRate + efficiency2.poleRate) / 3
 
-    // Comparaisons avec points
     const details = {
       championships: {
         winner: d1.nb_championship,
@@ -132,8 +130,6 @@ export default function ResultatComparaisonPage() {
       }
     }
 
-    // Calcul des scores avec nouveau système de points
-    // 1 point pour chaque catégorie standard
     if (details.championships.point === 'd1') score1 += 1
     else if (details.championships.point === 'd2') score2 += 1
 
@@ -146,22 +142,18 @@ export default function ResultatComparaisonPage() {
     if (details.poles.point === 'd1') score1 += 1
     else if (details.poles.point === 'd2') score2 += 1
 
-    // 3 points pour l'efficacité (importance majeure)
     if (details.efficiency.point === 'd1') score1 += 3
     else if (details.efficiency.point === 'd2') score2 += 3
 
-    // Critère de départage : si tous les pilotes sont à zéro partout sauf courses disputées
     const isDriver1AllZero = d1.nb_championship === 0 && d1.nb_victory === 0 && d1.nb_podiums === 0 && d1.nb_pole === 0
     const isDriver2AllZero = d2.nb_championship === 0 && d2.nb_victory === 0 && d2.nb_podiums === 0 && d2.nb_pole === 0
     
     let finalWinner, finalLoser
     
     if (isDriver1AllZero && isDriver2AllZero) {
-      // Si les deux pilotes sont à zéro partout, celui avec le plus de courses gagne
       finalWinner = d1.nb_race >= d2.nb_race ? d1 : d2
       finalLoser = d1.nb_race >= d2.nb_race ? d2 : d1
     } else if (score1 === score2) {
-      // En cas d'égalité, départage par l'efficacité puis par les courses disputées
       if (avgEfficiency1 === avgEfficiency2) {
         finalWinner = d1.nb_race >= d2.nb_race ? d1 : d2
         finalLoser = d1.nb_race >= d2.nb_race ? d2 : d1
@@ -230,15 +222,11 @@ export default function ResultatComparaisonPage() {
       />
       <NavBar />
       
-      <div className="container mx-auto px-4 py-8 pt-24 relative z-10">
-        {/* Pilote gagnant au centre */}
+      <div className="container mx-auto px-4 py-8 pt-35 relative z-10">
         <div className="flex flex-col items-center mb-12">
           <div className="mb-6">
-            <div className="text-3xl font-bold text-white text-center mb-2">
-              🏆 GAGNANT
-            </div>
-            <div className="text-xl text-center">
-              {result.winner.name} {result.winner.surname}
+            <div className="text-4xl font-formula1 font-bold text-white text-center mb-2">
+              GAGNANT
             </div>
           </div>
           

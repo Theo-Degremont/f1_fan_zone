@@ -13,41 +13,32 @@ import { validateEmail, sanitizeInput } from '../../src/utils/validation'
 export default function ConnexionPage() {
   const router = useRouter()
   
-  // Hook pour l'authentification
   const { login, isLoading: authLoading, error: authError, clearError, isAuthenticated } = useAuth()
-  
-  // Hook pour les toasts
-  const { showToast, ToastContainer } = useToast()
 
-  // États pour les champs du formulaire
+
   const [formData, setFormData] = useState({
     email: '',
     password: '',
     rememberMe: false
   })
 
-  // États pour les erreurs de validation
   const [validationErrors, setValidationErrors] = useState<{
     email?: string;
     password?: string;
   }>({})
 
-  // Rediriger si déjà connecté
   useEffect(() => {
     if (isAuthenticated) {
-      showToast('Vous êtes déjà connecté !', 'info')
-      router.push('/') // Rediriger vers la page d'accueil
+      router.push('/') 
     }
-  }, [isAuthenticated, router, showToast]) // Remettre showToast maintenant qu'il est stable
+  }, [isAuthenticated, router]) 
 
-  // Gestion des changements dans les inputs sécurisés
   const handleSecureInputChange = (name: string, value: string) => {
     setFormData(prev => ({
       ...prev,
       [name]: value
     }))
 
-    // Effacer l'erreur de validation pour ce champ
     if (validationErrors[name as keyof typeof validationErrors]) {
       setValidationErrors(prev => ({
         ...prev,
@@ -55,34 +46,17 @@ export default function ConnexionPage() {
       }))
     }
 
-    // Effacer l'erreur de l'API
     if (authError) {
       clearError()
     }
   }
 
-  // Gestion des changements dans les inputs
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value, type, checked } = e.target
-    setFormData(prev => ({
-      ...prev,
-      [name]: type === 'checkbox' ? checked : value
-    }))
-    // Effacer l'erreur quand l'utilisateur tape
-    if (authError) {
-      clearError()
-    }
-  }
-
-  // Gestion de la soumission du formulaire
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     
-    // Effacer les erreurs précédentes
     setValidationErrors({})
     clearError()
 
-    // Validation côté client
     const errors: typeof validationErrors = {}
     
     const emailValidation = validateEmail(formData.email)
@@ -96,31 +70,21 @@ export default function ConnexionPage() {
 
     if (Object.keys(errors).length > 0) {
       setValidationErrors(errors)
-      showToast('Veuillez corriger les erreurs dans le formulaire', 'error')
       return
     }
 
     try {
-      // Nettoyer les données avant envoi
       const cleanEmail = sanitizeInput(formData.email.toLowerCase())
       
-      // Appeler l'API de connexion
       await login(cleanEmail, formData.password)
-      
-      // Si succès, afficher le toast de connexion réussie
-      showToast('Connexion réussie ! Bon retour !', 'success')
-      
-      // La redirection sera gérée par useEffect si nécessaire
       
     } catch (error) {
       console.error('Erreur lors de la connexion:', error)
-      showToast('Erreur lors de la connexion', 'error')
     }
   }
 
   return (
     <div className="min-h-screen relative pt-20">
-      {/* Background */}
       <BubbleBackground
         interactive={true}
         colors={{ 
@@ -134,30 +98,24 @@ export default function ConnexionPage() {
         className="fixed inset-0 -z-10"
       />
 
-      {/* Navigation */}
       <NavBar />
 
-      {/* Contenu principal */}
       <section className="relative z-10 py-20">
         <div className="max-w-md mx-auto px-4 sm:px-6 lg:px-8">
           
-          {/* Conteneur avec fond flou */}
           <div className="backdrop-blur-md bg-black/20 rounded-2xl shadow-2xl border border-white/10 p-8">
           
-            {/* Titre */}
             <div className="text-center mb-8">
-              <h1 className="text-4xl font-bold text-f1-gray-100 mb-2">
-                Bon retour !
+              <h1 className="text-4xl font-formula1 font-bold text-f1-gray-100 mb-2">
+                Connexion
               </h1>
               <p className="text-f1-gray-100/70">
                 Connectez-vous à votre compte F1 Fan Zone
               </p>
             </div>
 
-          {/* Formulaire de connexion */}
           <form onSubmit={handleSubmit} className="space-y-6">
             
-            {/* Messages d'erreur globaux */}
             {authError && (
               <div className="bg-red-600/10 border border-red-600/30 rounded-lg p-4">
                 <p className="text-red-400 text-sm flex items-center">
@@ -169,7 +127,6 @@ export default function ConnexionPage() {
               </div>
             )}
             
-            {/* Email */}
             <SecureInput
               type="email"
               name="email"
@@ -180,7 +137,6 @@ export default function ConnexionPage() {
               required
             />
 
-            {/* Mot de passe */}
             <SecureInput
               type="password"
               name="password"
@@ -191,14 +147,12 @@ export default function ConnexionPage() {
               required
             />
 
-            {/* Se souvenir de moi */}
             <div className="flex items-center justify-center">
               <a href="#" className="text-red-600 hover:text-red-400 text-sm transition-colors">
                 Mot de passe oublié ?
               </a>
             </div>
 
-            {/* Bouton de connexion */}
             <button
               type="submit"
               disabled={authLoading}
@@ -216,7 +170,6 @@ export default function ConnexionPage() {
                 </>
               )}
             </button>
-            {/* Lien vers l'inscription */}
             <div className="text-center mt-1">
               <p className="text-f1-gray-100/70">
                 Pas encore de compte ?{' '}
@@ -231,11 +184,8 @@ export default function ConnexionPage() {
         </div>
       </section>
 
-      {/* Footer */}
       <Footer />
       
-      {/* Toast Container */}
-      <ToastContainer />
     </div>
   )
 }

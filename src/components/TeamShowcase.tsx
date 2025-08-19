@@ -13,7 +13,6 @@ export default function TeamShowcase() {
   const [error, setError] = useState<string | null>(null)
   const carRef = useRef<HTMLDivElement>(null)
 
-  // Charger les données depuis l'API
   useEffect(() => {
     const loadTeams = async () => {
       try {
@@ -22,7 +21,6 @@ export default function TeamShowcase() {
         
         const apiTeams = await TeamsApiService.getAllTeams()
         
-        // Trier les équipes par nombre de championnats puis par victoires
         apiTeams.sort((a, b) => {
           if (b.nb_championship !== a.nb_championship) {
             return b.nb_championship - a.nb_championship
@@ -42,7 +40,6 @@ export default function TeamShowcase() {
     loadTeams()
   }, [])
 
-  // Intersection Observer pour détecter le scroll
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -51,8 +48,8 @@ export default function TeamShowcase() {
         }
       },
       {
-        threshold: 0.1, // Réduire le seuil pour déclencher plus tôt
-        rootMargin: '50px 0px 50px 0px' // Ajouter une marge pour déclencher avant que l'élément soit complètement visible
+        threshold: 0.1, 
+        rootMargin: '50px 0px 50px 0px' 
       }
     )
 
@@ -67,7 +64,6 @@ export default function TeamShowcase() {
     }
   }, [])
 
-  // Rotation automatique des équipes
   useEffect(() => {
     if (teams.length === 0) return
 
@@ -86,7 +82,6 @@ export default function TeamShowcase() {
     return () => clearInterval(interval)
   }, [teams.length])
 
-  // État de chargement
   if (isLoading) {
     return (
       <div className="grid lg:grid-cols-2 gap-5 items-center w-full">
@@ -108,7 +103,6 @@ export default function TeamShowcase() {
     )
   }
 
-  // État d'erreur
   if (error || teams.length === 0) {
     return (
       <div className="grid lg:grid-cols-2 gap-5 items-center w-full">
@@ -146,7 +140,6 @@ export default function TeamShowcase() {
 
   const currentTeam = teams[currentTeamIndex]
 
-  // Debug: afficher les informations de l'équipe actuelle
   console.log('Équipe actuelle:', currentTeam?.name, 'Key:', currentTeam?.key)
   console.log('isVisible:', isVisible, 'isAnimating:', isAnimating)
 
@@ -163,7 +156,6 @@ export default function TeamShowcase() {
               fill
               className={currentTeam.key === 'alpine' ? "object-contain grayscale brightness-25 contrast-105" : "object-contain grayscale brightness-50 contrast-105"}
               onError={(e) => {
-                // Fallback vers un logo par défaut en cas d'erreur
                 const target = e.target as HTMLImageElement
                 target.src = '/images/team_logo/logo_ferrari.png'
               }}
@@ -171,33 +163,33 @@ export default function TeamShowcase() {
           </div>
           
           <div className="absolute inset-0 flex flex-col justify-center items-center text-center p-8">
-            <h2 className="text-4xl lg:text-5xl font-bold text-f1-gray-100 mb-3 drop-shadow-2xl">
+            <h2 className="text-4xl font-formula1 lg:text-5xl font-bold text-f1-gray-100 mb-3 drop-shadow-2xl">
               {currentTeam.name}
             </h2>
-            <p className="text-xl text-f1-gray-100/90 drop-shadow-lg mb-8">
+            <p className="text-2xl text-f1-gray-100/90 drop-shadow-lg mb-8">
               Fondée en {new Date(currentTeam.date_start).getFullYear()}
             </p>
             
             <div className="grid grid-cols-4 gap-1 w-full max-w-lg">
               
               <div>
-                <div className="text-2xl lg:text-3xl font-bold drop-shadow-lg">{currentTeam.nb_victory}</div>
-                <div className="text-xs lg:text-sm text-f1-gray-100/80 drop-shadow-md">Victoires</div>
+                <div className="text-2xl font-formula1 lg:text-3xl font-bold drop-shadow-lg">{currentTeam.nb_victory}</div>
+                <div className="text-s lg:text-m text-f1-gray-100/80 drop-shadow-md">Victoires</div>
               </div>
 
               <div>
-                <div className="text-2xl lg:text-3xl font-bold drop-shadow-lg">{currentTeam.nb_race}</div>
-                <div className="text-xs lg:text-sm text-f1-gray-100/80 drop-shadow-md">Courses</div>
+                <div className="text-2xl font-formula1 lg:text-3xl font-bold drop-shadow-lg">{currentTeam.nb_race}</div>
+                <div className="text-s lg:text-m text-f1-gray-100/80 drop-shadow-md">Courses</div>
               </div>
 
               <div>
-                <div className="text-2xl lg:text-3xl font-bold drop-shadow-lg">{currentTeam.nb_championship}</div>
-                <div className="text-xs lg:text-sm text-f1-gray-100/80 drop-shadow-md">Titres</div>
+                <div className="text-2xl font-formula1 lg:text-3xl font-bold drop-shadow-lg">{currentTeam.nb_championship}</div>
+                <div className="text-s lg:text-m text-f1-gray-100/80 drop-shadow-md">Titres</div>
               </div>
 
               <div>
-                <div className="text-2xl lg:text-3xl font-bold drop-shadow-lg">{currentTeam.nb_podiums}</div>
-                <div className="text-xs lg:text-sm text-f1-gray-100/80 drop-shadow-md">Podiums</div>
+                <div className="text-2xl font-formula1 lg:text-3xl font-bold drop-shadow-lg">{currentTeam.nb_podiums}</div>
+                <div className="text-s lg:text-m text-f1-gray-100/80 drop-shadow-md">Podiums</div>
               </div>
             </div>
           </div>
@@ -223,7 +215,6 @@ export default function TeamShowcase() {
             className="object-contain group-hover:scale-105 transition-transform duration-700"
             onError={(e) => {
               console.log(`Erreur de chargement de l'image: /images/team_cars/${currentTeam.key}_f1_cars.png`)
-              // Fallback vers une voiture par défaut en cas d'erreur
               const target = e.target as HTMLImageElement
               target.src = '/images/team_cars/ferrari_f1_cars.png'
             }}

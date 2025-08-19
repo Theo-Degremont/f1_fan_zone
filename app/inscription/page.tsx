@@ -8,22 +8,16 @@ import { BubbleBackground } from '../../src/components/animate-ui/backgrounds/bu
 import { useTeams } from '../../src/hooks/useTeams'
 import { useAuth } from '../../src/hooks/useAuth'
 import { SecureInput } from '../../src/components/SecureInput'
-import { useToast } from '../../src/components/Toast'
 import { validateRegistrationForm, sanitizeInput } from '../../src/utils/validation'
 
 export default function InscriptionPage() {
   const router = useRouter()
   
-  // Hook pour récupérer les équipes depuis l'API
   const { teams: apiTeams, isLoading: teamsLoading, error: teamsError } = useTeams()
   
-  // Hook pour l'authentification
   const { register, isLoading: authLoading, error: authError, clearError, isAuthenticated, checkEmailAvailability } = useAuth()
   
-  // Hook pour les toasts
-  const { showToast, ToastContainer } = useToast()
 
-  // États pour les champs du formulaire
   const [formData, setFormData] = useState({
     username: '',
     email: '',
@@ -33,7 +27,6 @@ export default function InscriptionPage() {
     favorite_driver_id: null as number | null
   })
 
-  // États pour les erreurs de validation
   const [validationErrors, setValidationErrors] = useState<{
     username?: string;
     email?: string;
@@ -42,22 +35,18 @@ export default function InscriptionPage() {
     teams?: string;
   }>({})
 
-  // État pour savoir si le formulaire a été soumis
   const [isFormSubmitted, setIsFormSubmitted] = useState(false)
 
-  // Rediriger si déjà connecté
   useEffect(() => {
     if (isAuthenticated) {
-      showToast('Vous êtes déjà connecté !', 'info')
-      router.push('/') // Rediriger vers la page d'accueil
+      router.push('/') 
     }
-  }, [isAuthenticated, router, showToast]) // Remettre showToast maintenant qu'il est stable
+  }, [isAuthenticated, router])
 
-  // États pour les listes déroulantes
+
   const [showTeamsList, setShowTeamsList] = useState(false)
   const [showDriversList, setShowDriversList] = useState(false)
 
-  // Extraction des pilotes depuis les équipes de l'API
   const drivers = useMemo(() => {
     const allDrivers: Array<{id: number, name: string, surname: string, teamName: string}> = []
     
@@ -77,14 +66,12 @@ export default function InscriptionPage() {
     return allDrivers
   }, [apiTeams])
 
-  // Gestion des changements dans les inputs sécurisés
   const handleSecureInputChange = (name: string, value: string) => {
     setFormData(prev => ({
       ...prev,
       [name]: value
     }))
 
-    // Effacer l'erreur de validation pour ce champ
     if (validationErrors[name as keyof typeof validationErrors]) {
       setValidationErrors(prev => ({
         ...prev,
@@ -92,13 +79,11 @@ export default function InscriptionPage() {
       }))
     }
 
-    // Effacer l'erreur de l'API
     if (authError) {
       clearError()
     }
   }
 
-  // Validation en temps réel
   useEffect(() => {
     if (isFormSubmitted) {
       const validation = validateRegistrationForm(formData)
@@ -106,7 +91,6 @@ export default function InscriptionPage() {
     }
   }, [formData, isFormSubmitted])
 
-  // Gestion de la sélection d'équipe
   const handleTeamSelect = (teamId: number) => {
     setFormData(prev => ({
       ...prev,
@@ -114,7 +98,6 @@ export default function InscriptionPage() {
     }))
     setShowTeamsList(false)
     
-    // Effacer l'erreur de validation
     if (validationErrors.teams) {
       setValidationErrors(prev => ({
         ...prev,
@@ -123,7 +106,6 @@ export default function InscriptionPage() {
     }
   }
 
-  // Gestion de la sélection de pilote
   const handleDriverSelect = (driverId: number) => {
     setFormData(prev => ({
       ...prev,
@@ -131,7 +113,6 @@ export default function InscriptionPage() {
     }))
     setShowDriversList(false)
     
-    // Effacer l'erreur de validation
     if (validationErrors.teams) {
       setValidationErrors(prev => ({
         ...prev,
@@ -140,60 +121,46 @@ export default function InscriptionPage() {
     }
   }
 
-  // Gestion de la soumission du formulaire
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsFormSubmitted(true)
     
-    // Effacer les erreurs précédentes
     setValidationErrors({})
     clearError()
 
-    // Validation complète du formulaire
     const validation = validateRegistrationForm(formData)
     
     if (!validation.isValid) {
       setValidationErrors(validation.errors)
-      showToast('Veuillez corriger les erreurs dans le formulaire', 'error')
       return
     }
 
     try {
-      // Préparer les données pour l'API (sans confirmPassword et avec nettoyage)
       const { confirmPassword, ...registrationData } = formData
       
-      // Nettoyer les données avant envoi
       const cleanData = {
         ...registrationData,
         username: sanitizeInput(registrationData.username),
         email: sanitizeInput(registrationData.email.toLowerCase())
       }
       
-      // Appeler l'API d'inscription
       await register(cleanData)
       
-      // Si succès, montrer le toast de succès
-      showToast('Inscription réussie ! Bienvenue dans la communauté F1 Fan Zone !', 'success')
       
-      // La navbar se mettra à jour automatiquement grâce au hook useAuth
       
     } catch (error) {
       console.error('Erreur lors de l\'inscription:', error)
-      showToast('Une erreur est survenue lors de l\'inscription', 'error')
     }
   }
 
-  // Fermer les dropdowns quand on clique en dehors
   const closeDropdowns = () => {
     setShowTeamsList(false)
     setShowDriversList(false)
   }
 
-  // Trouver l'équipe sélectionnée
   const selectedTeam = apiTeams.find(team => team.id === formData.favorite_team_id)
   const selectedDriver = drivers.find(driver => driver.id === formData.favorite_driver_id)
 
-  // Affichage du loading
   if (teamsLoading) {
     return (
       <div className="min-h-screen relative pt-20 flex items-center justify-center">
@@ -218,7 +185,6 @@ export default function InscriptionPage() {
     )
   }
 
-  // Affichage d'erreur pour le chargement des équipes
   if (teamsError) {
     return (
       <div className="min-h-screen relative pt-20 flex items-center justify-center">
@@ -250,7 +216,6 @@ export default function InscriptionPage() {
 
   return (
     <div className="min-h-screen relative pt-20">
-      {/* Background */}
       <BubbleBackground
         interactive={true}
         colors={{ 
@@ -264,19 +229,15 @@ export default function InscriptionPage() {
         className="fixed inset-0 -z-10"
       />
 
-      {/* Navigation */}
       <NavBar />
 
-      {/* Contenu principal */}
       <section className="relative z-10 py-20">
         <div className="max-w-md mx-auto px-4 sm:px-6 lg:px-8">
           
-          {/* Conteneur avec fond flou */}
           <div className="backdrop-blur-md bg-black/20 rounded-2xl shadow-2xl border border-white/10 p-8">
           
-            {/* Titre */}
             <div className="text-center mb-8">
-              <h1 className="text-4xl font-bold text-f1-gray-100 mb-2">
+              <h1 className="text-4xl font-formula1 font-bold text-f1-gray-100 mb-2">
                 Rejoignez la communauté
               </h1>
               <p className="text-f1-gray-100/70">
@@ -284,10 +245,8 @@ export default function InscriptionPage() {
               </p>
             </div>
 
-          {/* Formulaire d'inscription */}
           <form onSubmit={handleSubmit} className="space-y-6">
             
-            {/* Messages d'erreur globaux */}
             {authError && (
               <div className="bg-red-600/10 border border-red-600/30 rounded-lg p-4">
                 <p className="text-red-400 text-sm flex items-center">
@@ -299,7 +258,6 @@ export default function InscriptionPage() {
               </div>
             )}
             
-            {/* Pseudo */}
             <SecureInput
               type="text"
               name="username"
@@ -310,7 +268,6 @@ export default function InscriptionPage() {
               required
             />
 
-            {/* Email */}
             <SecureInput
               type="email"
               name="email"
@@ -323,7 +280,6 @@ export default function InscriptionPage() {
               required
             />
 
-            {/* Mot de passe */}
             <SecureInput
               type="password"
               name="password"
@@ -335,7 +291,6 @@ export default function InscriptionPage() {
               required
             />
 
-            {/* Confirmation mot de passe */}
             <SecureInput
               type="password"
               name="confirmPassword"
@@ -346,7 +301,6 @@ export default function InscriptionPage() {
               required
             />
 
-            {/* Équipe favorite */}
             <div className="relative">
               <button
                 type="button"
@@ -398,7 +352,6 @@ export default function InscriptionPage() {
                 </>
               )}
               
-              {/* Message d'erreur pour l'équipe */}
               {validationErrors.teams && (
                 <p className="text-red-400 text-sm mt-1 flex items-center">
                   <svg className="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
@@ -409,7 +362,6 @@ export default function InscriptionPage() {
               )}
             </div>
 
-            {/* Pilote favori */}
             <div className="relative">
               <button
                 type="button"
@@ -454,7 +406,6 @@ export default function InscriptionPage() {
               )}
             </div>
 
-            {/* Bouton d'inscription */}
             <button
               type="submit"
               disabled={authLoading}
@@ -473,7 +424,6 @@ export default function InscriptionPage() {
               )}
             </button>
 
-            {/* Lien vers la connexion */}
             <div className="text-center mt-6">
               <p className="text-f1-gray-100/70">
                 Déjà membre ?{' '}
@@ -488,11 +438,9 @@ export default function InscriptionPage() {
         </div>
       </section>
 
-      {/* Footer */}
+      
       <Footer />
       
-      {/* Toast Container */}
-      <ToastContainer />
     </div>
   )
 }

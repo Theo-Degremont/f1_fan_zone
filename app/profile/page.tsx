@@ -37,7 +37,6 @@ export default function ProfilePage() {
 
   useEffect(() => {
     if (!isAuthenticated && !profileLoading) {
-      showToast('Veuillez vous connecter pour accéder à votre profil', 'error')
       router.push('/connexion')
     }
   }, [isAuthenticated, profileLoading, router, showToast])
@@ -116,7 +115,6 @@ export default function ProfilePage() {
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
       errors.email = 'Format d\'email invalide'
     } else {
-      // Vérifier la disponibilité de l'email seulement si l'email a changé
       if (profile && formData.email.toLowerCase() !== profile.email.toLowerCase()) {
         try {
           const emailCheck = await checkEmailAvailability(formData.email)
@@ -137,7 +135,6 @@ export default function ProfilePage() {
     
     const isValid = await validateForm()
     if (!isValid) {
-      showToast('Veuillez corriger les erreurs dans le formulaire', 'error')
       return
     }
 
@@ -153,27 +150,15 @@ export default function ProfilePage() {
       
       if (success) {
         console.log('Profil mis à jour avec succès')
-      } else {
-        if (profileError?.includes('email') || profileError?.includes('Email')) {
-          showToast('Cet email est déjà utilisé par un autre compte', 'error')
-        } else if (profileError?.includes('username') || profileError?.includes('pseudo')) {
-          showToast('Ce pseudo est déjà utilisé par un autre compte', 'error')
-        } else if (profileError?.includes('CORS') || profileError?.includes('PUT') || profileError?.includes('PATCH')) {
-          showToast('Fonctionnalité temporairement indisponible. L\'équipe technique travaille sur le problème.', 'error')
-        } else {
-          showToast(profileError || 'Erreur lors de la mise à jour du profil', 'error')
-        }
-      }
+      } 
       
     } catch (error) {
       console.error('Erreur lors de la mise à jour du profil:', error)
-      showToast('Une erreur est survenue lors de la mise à jour', 'error')
     }
   }
 
   const handleLogout = () => {
     logout()
-    showToast('Vous avez été déconnecté avec succès', 'success')
     router.push('/')
   }
 
@@ -261,7 +246,7 @@ export default function ProfilePage() {
           <div className="backdrop-blur-md bg-black/20 rounded-2xl shadow-2xl border border-white/10 p-8">
           
             <div className="text-center mb-8">
-              <h1 className="text-4xl font-bold text-f1-gray-100 mb-2">
+              <h1 className="text-4xl font-formula1 font-bold text-f1-gray-100 mb-2">
                 Mon Profil
               </h1>
               <p className="text-f1-gray-100/70">
