@@ -98,10 +98,6 @@ export default function Footer() {
             Mentions légales
           </Link>
           <span className="text-f1-gray-100/30">•</span>
-          <Link href="/conditions-generales" className="legal-link-hover text-sm">
-            Conditions générales
-          </Link>
-          <span className="text-f1-gray-100/30">•</span>
           <Link href="/cgu" className="legal-link-hover text-sm">
             CGU
           </Link>
@@ -110,20 +106,8 @@ export default function Footer() {
             Politique de confidentialité
           </Link>
           <span className="text-f1-gray-100/30">•</span>
-          <Link href="/cookies" className="legal-link-hover text-sm">
-            Gestion des cookies
-          </Link>
-          <span className="text-f1-gray-100/30">•</span>
           <Link href="/contact" className="legal-link-hover text-sm">
             Contact
-          </Link>
-          <span className="text-f1-gray-100/30">•</span>
-          <Link href="/partenaires" className="legal-link-hover text-sm">
-            Partenaires
-          </Link>
-          <span className="text-f1-gray-100/30">•</span>
-          <Link href="/accessibilite" className="legal-link-hover text-sm">
-            Accessibilité
           </Link>
         </div>
 
