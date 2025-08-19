@@ -36,8 +36,22 @@ export default function ClassementPage() {
       }
       
       const data = await response.json();
-      setClassementsTeam(data.teams || []);
-      setTotalTeams(data.totalTeams || 0);
+      console.log('📊 Données reçues de l\'API classements teams:', data);
+      console.log('📊 Structure de data:', typeof data, Object.keys(data));
+      
+      let classements = [];
+      if (data.data && data.data.classements) {
+        classements = data.data.classements;
+      } else if (data.classements) {
+        classements = data.classements;
+      } else if (Array.isArray(data)) {
+        classements = data;
+      } else {
+        console.log('Data complet:', JSON.stringify(data, null, 2));
+      }
+      
+      setClassementsTeam(classements);
+      setTotalTeams(classements.length);
     } catch (err) {
       console.error('Erreur lors du chargement du classement teams:', err);
       setErrorTeam(err instanceof Error ? err.message : 'Erreur inconnue');
@@ -245,14 +259,14 @@ export default function ClassementPage() {
 
                         {/* Équipe */}
                         <td className="px-6 py-4 whitespace-nowrap">
-                          {classement.driver.current_team ? (
+                          {classement.driver.team_history.length > 0 ? (
                             <div className="flex items-center gap-3">
                               <div 
                                 className="w-4 h-4 rounded-full"
-                                style={{ backgroundColor: classement.driver.current_team.color }}
+                                style={{ backgroundColor: classement.driver.team_history[0].team.color }}
                               />
                               <span className="text-f1-gray-100 text-sm">
-                                {classement.driver.current_team.name}
+                                {classement.driver.team_history[0].team.name}
                               </span>
                             </div>
                           ) : (
@@ -300,7 +314,7 @@ export default function ClassementPage() {
                         Victoires
                       </th>
                       <th className="px-6 py-4 text-center text-sm font-semibold text-f1-gray-100 uppercase tracking-wider">
-                        Podiums
+                        Victoires Totales
                       </th>
                       <th className="px-6 py-4 text-right text-sm font-semibold text-f1-gray-100 uppercase tracking-wider">
                         Points
@@ -363,10 +377,10 @@ export default function ClassementPage() {
                         {/* Podiums */}
                         <td className="px-6 py-4 whitespace-nowrap text-center">
                           <div className="text-lg font-bold text-f1-gray-100">
-                            {classement.team.nb_podiums}
+                            {classement.team.nb_victory}
                           </div>
                           <div className="text-xs text-f1-gray-100/60">
-                            total
+                            victoires
                           </div>
                         </td>
 
