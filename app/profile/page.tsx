@@ -4,6 +4,7 @@ import React, { useState, useMemo, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import NavBar from '../../src/components/NavBar'
 import Footer from '../../src/components/Footer'
+import ProtectedRoute from '../../src/components/ProtectedRoute'
 import { BubbleBackground } from '../../src/components/animate-ui/backgrounds/bubble'
 import { useTeams } from '../../src/hooks/useTeams'
 import { useAuth } from '../../src/hooks/useAuth'
@@ -224,7 +225,8 @@ export default function ProfilePage() {
   }
 
   return (
-    <div className="min-h-screen relative pt-20">
+    <ProtectedRoute>
+      <div className="min-h-screen relative pt-20">
       <BubbleBackground
         interactive={true}
         colors={{ 
@@ -416,6 +418,7 @@ export default function ProfilePage() {
       <Footer />
       
       <ToastContainer />
-    </div>
+      </div>
+    </ProtectedRoute>
   )
 }

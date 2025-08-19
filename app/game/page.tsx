@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import NavBar from '@/src/components/NavBar'
 import Footer from '@/src/components/Footer'
+import ProtectedRoute from '@/src/components/ProtectedRoute'
 import { BubbleBackground } from '@/src/components/animate-ui/backgrounds/bubble'
 import { useGameScore } from '@/src/hooks/useGameScore'
 import { useAuth } from '@/src/hooks/useAuth'
@@ -96,7 +97,8 @@ export default function Game() {
                      gameState === 'result' && !tooEarly ? finalTime : '0.00'
   
   return (
-    <div className="min-h-screen flex flex-col">
+    <ProtectedRoute>
+      <div className="min-h-screen flex flex-col">
       <NavBar />
       
       <BubbleBackground
@@ -230,6 +232,7 @@ export default function Game() {
       )}
       
       <Footer />
-    </div>
+      </div>
+    </ProtectedRoute>
   )
 }

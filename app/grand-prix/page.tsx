@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react'
 import NavBar from '../../src/components/NavBar'
 import Footer from '../../src/components/Footer'
+import ProtectedRoute from '../../src/components/ProtectedRoute'
 import { BubbleBackground } from '../../src/components/animate-ui/backgrounds/bubble'
 import { useGrandPrix, type GrandPrix } from '../../src/hooks/useGrandPrix'
 import { GrandPrixCard } from '../../src/components/GrandPrixCard'
@@ -18,23 +19,24 @@ export default function GrandPrixPage() {
   }, [selectedYear, loadGrandPrixBySeason])
 
   return (
-    <div className="min-h-screen relative pt-20">
-      <BubbleBackground
-        interactive={true}
-        colors={{ 
-          first: '218,59,35', 
-          second: '196,23,0', 
-          third: '131,15,0', 
-          fourth: '218,59,35', 
-          fifth: '131,15,0', 
-          sixth: '131,15,0' 
-        }}
-        className="fixed inset-0 -z-10"
-      />
+    <ProtectedRoute>
+      <div className="min-h-screen relative pt-20">
+        <BubbleBackground
+          interactive={true}
+          colors={{ 
+            first: '218,59,35', 
+            second: '196,23,0', 
+            third: '131,15,0', 
+            fourth: '218,59,35', 
+            fifth: '131,15,0', 
+            sixth: '131,15,0' 
+          }}
+          className="fixed inset-0 -z-10"
+        />
 
-      <NavBar />
+        <NavBar />
 
-      <main className="relative z-10 py-20">
+        <main className="relative z-10 py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
           <div className="text-center mb-12">
@@ -106,9 +108,10 @@ export default function GrandPrixPage() {
             </div>
           )}
         </div>
-      </main>
+        </main>
 
-      <Footer />
-    </div>
+        <Footer />
+      </div>
+    </ProtectedRoute>
   )
 }

@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import NavBar from '@/src/components/NavBar';
 import Footer from '@/src/components/Footer';
+import ProtectedRoute from '@/src/components/ProtectedRoute';
 import { BubbleBackground } from '@/src/components/animate-ui/backgrounds/bubble';
 import { useDailyQuestion } from '@/src/hooks/useDailyQuestion';
 
@@ -138,7 +139,8 @@ export default function CommunityPage() {
   const formattedAnswers = getFormattedAnswers();
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-f1-gray-900 via-f1-gray-800 to-black">
+    <ProtectedRoute>
+      <div className="min-h-screen bg-gradient-to-br from-f1-gray-900 via-f1-gray-800 to-black">
         <BubbleBackground
             interactive = {true}
             colors={{ 
@@ -229,6 +231,7 @@ export default function CommunityPage() {
         </div>
       </div>
             <Footer />
-    </div>
+      </div>
+    </ProtectedRoute>
   );
 }

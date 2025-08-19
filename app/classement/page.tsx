@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import NavBar from '../../src/components/NavBar';
 import Footer from '../../src/components/Footer';
+import ProtectedRoute from '../../src/components/ProtectedRoute';
 import { BubbleBackground } from '../../src/components/animate-ui/backgrounds/bubble';
 import { useClassement } from '../../src/hooks/useClassement';
 import { ClassementTeam } from '../../src/modeles/classementModel';
@@ -56,7 +57,7 @@ export default function ClassementPage() {
   }, [selectedYear, activeTab, loadClassementBySeason]);
 
   return (
-    <>
+    <ProtectedRoute>
       <NavBar />
             <BubbleBackground
               interactive={true}
@@ -410,6 +411,6 @@ export default function ClassementPage() {
       </div>
 
       <Footer />
-    </>
+    </ProtectedRoute>
   );
 }

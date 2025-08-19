@@ -18,18 +18,23 @@ interface UseAuthReturn {
 export function useAuth(): UseAuthReturn {
   const [user, setUser] = useState<Omit<User, 'password'> | null>(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true); // Initialisé à true
   const [error, setError] = useState<string | null>(null);
 
   // Vérifier si l'utilisateur est déjà connecté au chargement
   useEffect(() => {
     const checkAuth = async () => {
       try {
+        setIsLoading(true); // Commencer le chargement
+        console.log('🔍 Vérification de l\'authentification...');
+        
         // Vérifier et rafraîchir les tokens si nécessaire
         const tokensValid = await authService.ensureValidTokens();
+        console.log('🔑 Tokens valides:', tokensValid);
         
         if (tokensValid) {
           setIsAuthenticated(true);
+          console.log('✅ Utilisateur authentifié');
           const tokens = authService.getTokens();
           if (tokens.accessToken) {
             // Optionnel : Décoder le token pour récupérer les infos utilisateur
@@ -43,13 +48,17 @@ export function useAuth(): UseAuthReturn {
           }
         } else {
           // Tokens invalides ou expirés
+          console.log('❌ Tokens invalides, utilisateur non authentifié');
           setIsAuthenticated(false);
           setUser(null);
         }
       } catch (error) {
-        console.error('Erreur lors de la vérification des tokens:', error);
+        console.error('❌ Erreur lors de la vérification des tokens:', error);
         setIsAuthenticated(false);
         setUser(null);
+      } finally {
+        setIsLoading(false); // Terminer le chargement dans tous les cas
+        console.log('🏁 Vérification terminée');
       }
     };
 

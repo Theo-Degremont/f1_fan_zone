@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import Image from 'next/image'
 import NavBar from '@/src/components/NavBar'
 import Footer from '@/src/components/Footer'
+import ProtectedRoute from '@/src/components/ProtectedRoute'
 import PiloteCard from '@/src/components/PiloteCard'
 import PiloteCardFlip from '@/src/components/PiloteCardFlip'
 import EmptySlot from '@/src/components/EmptySlot'
@@ -88,7 +89,8 @@ export default function ComparateurPage() {
   }
 
   return (
-    <div className="min-h-screen relative">
+    <ProtectedRoute>
+      <div className="min-h-screen relative">
       <BubbleBackground
             interactive = {true}
               colors={{ 
@@ -188,6 +190,7 @@ export default function ComparateurPage() {
       </div>
 
       <Footer />
-    </div>
+      </div>
+    </ProtectedRoute>
   )
 }

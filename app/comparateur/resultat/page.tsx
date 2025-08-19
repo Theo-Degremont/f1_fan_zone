@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import { useSearchParams, useRouter } from 'next/navigation'
 import NavBar from '@/src/components/NavBar'
 import Footer from '@/src/components/Footer'
+import ProtectedRoute from '@/src/components/ProtectedRoute'
 import { RippleButton } from '@/src/components/animate-ui/buttons/ripple';
 import PiloteCard from '@/src/components/PiloteCard'
 import { BubbleBackground } from '@/src/components/animate-ui/backgrounds/bubble'
@@ -207,7 +208,8 @@ export default function ResultatComparaisonPage() {
   }
 
   return (
-    <div className="min-h-screen relative">
+    <ProtectedRoute>
+      <div className="min-h-screen relative">
       <BubbleBackground
         interactive={true}
         colors={{ 
@@ -445,6 +447,7 @@ export default function ResultatComparaisonPage() {
         </div>
       </div>
       <Footer />
-    </div>
+      </div>
+    </ProtectedRoute>
   )
 }
