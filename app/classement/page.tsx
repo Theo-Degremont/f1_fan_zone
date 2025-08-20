@@ -307,12 +307,6 @@ export default function ClassementPage() {
                       <th className="px-6 py-4 text-left text-sm font-semibold text-f1-gray-100 uppercase tracking-wider">
                         Équipe
                       </th>
-                      <th className="px-6 py-4 text-center text-sm font-semibold text-f1-gray-100 uppercase tracking-wider">
-                        Victoires
-                      </th>
-                      <th className="px-6 py-4 text-center text-sm font-semibold text-f1-gray-100 uppercase tracking-wider">
-                        Victoires Totales
-                      </th>
                       <th className="px-6 py-4 text-right text-sm font-semibold text-f1-gray-100 uppercase tracking-wider">
                         Points
                       </th>
@@ -335,10 +329,7 @@ export default function ClassementPage() {
                               classement.position === 3 ? 'bg-orange-400/20 text-orange-400 border border-orange-400/30' :
                               'bg-f1-gray-700/20 text-f1-gray-100 border border-f1-gray-600/30'
                             }`}>
-                              {classement.position === 1 ? '🥇' :
-                               classement.position === 2 ? '🥈' :
-                               classement.position === 3 ? '🥉' :
-                               classement.position}
+                              {classement.position }
                             </div>
                           </div>
                         </td>
@@ -358,26 +349,6 @@ export default function ClassementPage() {
                                 {classement.team.nb_championship} titre{classement.team.nb_championship > 1 ? 's' : ''}
                               </div>
                             </div>
-                          </div>
-                        </td>
-
-                        {/* Victoires */}
-                        <td className="px-6 py-4 whitespace-nowrap text-center">
-                          <div className="text-lg font-bold text-f1-gray-100">
-                            {classement.nb_wins}
-                          </div>
-                          <div className="text-xs text-f1-gray-100/60">
-                            cette saison
-                          </div>
-                        </td>
-
-                        {/* Podiums */}
-                        <td className="px-6 py-4 whitespace-nowrap text-center">
-                          <div className="text-lg font-bold text-f1-gray-100">
-                            {classement.team.nb_victory}
-                          </div>
-                          <div className="text-xs text-f1-gray-100/60">
-                            victoires
                           </div>
                         </td>
 
